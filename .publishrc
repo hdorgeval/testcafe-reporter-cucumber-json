@@ -10,6 +10,6 @@
   "confirm": true,
   "publishCommand": "npm publish",
   "publishTag": "latest",
-  "prePublishScript": false,
+  "prePublishScript": "npm run build",
   "postPublishScript": false
 }
