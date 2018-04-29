@@ -2,6 +2,9 @@
 
 This is the **Cucumber JSON** reporter plugin for [TestCafe](http://devexpress.github.io/testcafe).
 
+[![npm badge](https://nodei.co/npm/testcafe-reporter-cucumber-json.png)](https://npmjs.org/package/testcafe-reporter-cucumber-json)
+
+
 ## To install this TestCafe Reporter
 
 * run the command `npm install --save testcafe-reporter-cucumber-json`.
