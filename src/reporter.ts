@@ -16,14 +16,13 @@ export const extendedReporterPlugin: IExtendedReporterPlugin = {
     reportTestDone(name: string, testRunInfo: ITestRunInfo, report: ICucumberJsonReport) {
         if (testRunInfo.errs && testRunInfo.errs.length > 0) {
             const formattedErrorMessage = this.renderErrors(testRunInfo.errs);
-            const screenshotPath = testRunInfo.errs
+            const screenshotPaths = testRunInfo.errs
                                     .map ((err: IError) => err.screenshotPath)
-                                    .filter((path) => path.endsWith(".png"))
-                                    .shift();
+                                    .filter((path) => path.endsWith(".png"));
             report
                 .createScenario(name, testRunInfo)
                 .withError(formattedErrorMessage)
-                .withScreenshot(screenshotPath);
+                .withScreenshots(screenshotPaths);
             return;
         }
         report.createScenario(name, testRunInfo);

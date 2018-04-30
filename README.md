@@ -18,7 +18,7 @@ This is the **Cucumber JSON** reporter plugin for [TestCafe](http://devexpress.g
 
 ## To generate the HTML report
 
-* install [multiple-cucumber-html-reporter](https://github.com/wswebcreation/multiple-cucumber-html-reporter):
+* install  [multiple-cucumber-html-reporter](https://github.com/wswebcreation/multiple-cucumber-html-reporter) (version >= 1.10.0):
     * `npm install --save-dev multiple-cucumber-html-reporter`
 
 * Create a `report-generator.js` file at the project root:

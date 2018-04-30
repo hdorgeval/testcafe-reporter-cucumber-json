@@ -161,9 +161,9 @@ export class CucumberJsonReport implements ICucumberJsonReport {
         }
         return this;
     }
-    public withScreenshot = (path: string | undefined) => {
-        if (path && this.currentStep) {
-            this.currentStep.image = path;
+    public withScreenshots = (paths: string[] | undefined) => {
+        if (paths && this.currentStep) {
+            this.currentStep.image = paths;
         }
         return this;
     }

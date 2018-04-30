@@ -49,7 +49,7 @@ export interface IStep {
     match: IMatch;
     text: string;
     tags: ITag[];
-    image: string | undefined;
+    image: string[] | undefined;
   }
 export interface IMatch {
     location: string;
@@ -113,7 +113,7 @@ export interface ICucumberJsonReport {
     createFeature: (name: string, path: string) => this;
     createScenario: (name: string, testRunInfo: any) => this;
     withError: (error: string) => this;
-    withScreenshot: (path: string | undefined) => this;
+    withScreenshots: (path: string[] | undefined) => this;
 }
 
 export interface IMetadata {

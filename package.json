@@ -1,6 +1,6 @@
 {
   "name": "testcafe-reporter-cucumber-json",
-  "version": "0.0.5",
+  "version": "0.1.0",
   "description": "Cucumber JSON TestCafe reporter plugin.",
   "main": "lib/index.js",
   "typings": "lib/index.d.ts",
