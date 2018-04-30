@@ -1,5 +1,5 @@
 import * as semver from "semver";
-import { IBrowser, INameVersion, IPlatform } from "./cucumber-json-interface";
+import { BrowserName, IBrowser, INameVersion, IPlatform } from "./cucumber-json-interface";
 
 const unknownPlatform: IPlatform = {
     name: "unknown",
@@ -133,8 +133,17 @@ export function getBrowserFrom(userAgent: string | undefined): IBrowser {
     }
 
     const browserInfo = extractNameAndVersion(rawBrowser);
+    const browserName: BrowserName = browserNameMapping[browserInfo.name]
+                                ? browserNameMapping[browserInfo.name]
+                                : "unknown";
     return {
-        name: browserInfo.name.toLowerCase(),
+        name: browserName,
         version: browserInfo.version,
     };
 }
+
+export const browserNameMapping: {[index: string]: BrowserName} = {
+    Chrome: "chrome",
+    HeadlessChrome: "chrome",
+    IE: "internet explorer",
+};

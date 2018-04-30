@@ -134,7 +134,7 @@ export interface INameVersion {
 }
 
 export interface IBrowser {
-    name: string;
+    name: BrowserName;
     version: string;
 }
 
