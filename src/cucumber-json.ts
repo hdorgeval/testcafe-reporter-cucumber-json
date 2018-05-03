@@ -115,7 +115,7 @@ export class CucumberJsonReport implements ICucumberJsonReport {
         const featureReport: IFeatureReport = {
             description: name || "",
             elements: [],
-            id: `Feature${this._features.length + 1}`,
+            id: this.getFeatureIdFrom(name),
             keyword: "Feature",
             line: 0,
             metadata: {
@@ -134,10 +134,7 @@ export class CucumberJsonReport implements ICucumberJsonReport {
         return this;
     }
     public createScenario = (name: string, testRunInfo: ITestRunInfo) => {
-        const scenarioId = this.currentFeature
-              ? this.currentFeature.elements.length + 1
-              : 0;
-
+        const scenarioId = this.getScenarioIdFrom(name);
         const scenario: IScenario = {
             id: `Scenario${scenarioId}`,
             keyword: "Scenario",
@@ -194,5 +191,21 @@ export class CucumberJsonReport implements ICucumberJsonReport {
             };
         }
         return step;
+    }
+
+    private getScenarioIdFrom = (scenarioName: string): string => {
+        const result = this.currentFeature && this.currentFeature.name
+                        ? `${this.currentFeature.name};${scenarioName}`
+                        : scenarioName;
+        // TODO: ensure this generated id is unique: if not prefix with filename
+        return result;
+    }
+
+    private getFeatureIdFrom = (featureName: string): string => {
+        const result = featureName
+                        ? featureName
+                        : `Feature${this._features.length + 1}`;
+        // TODO: ensure this generated id is unique: if not prefix with filename
+        return result;
     }
 }
