@@ -51,12 +51,15 @@ export const extendedReporterPlugin: IExtendedReporterPlugin = {
         return nativeWrite(text);
     },
     renderErrors(errs: any[]): string {
+        const originalStackTraceLimit = Error.stackTraceLimit;
+        Error.stackTraceLimit = 100;
         const lines: string[] = [];
         errs
             .map((err: any, idx: number) => {
                 const prefix = this.chalk.red(`${idx + 1}) `);
                 lines.push(this.formatError(err, prefix));
             });
+        Error.stackTraceLimit = originalStackTraceLimit;
         return lines.join("\n");
     },
     createErrorDecorator() {
