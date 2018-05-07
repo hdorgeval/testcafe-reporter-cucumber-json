@@ -21,7 +21,7 @@ export interface IReporterPlugin extends IReporter, IReporterlPluginHost {
 }
 
 export interface IExtendedReporterPlugin extends IExtendedReporter, IReporterlPluginHost {
-    renderErrors: (errs: any[]) => string;
+    renderErrors: (errs: IError[]) => string;
     createErrorDecorator: () => any;
 }
 
@@ -33,11 +33,30 @@ export interface ITestRunInfo {
 }
 
 export interface IError {
-   callsite: CallsiteRecord;
+   callsite: ICallsiteRecord;
    isTestCafeError: boolean;
    screenshotPath: string;
    type: TestCafeErrorType;
    userAgent: string;
+}
+
+export interface ICallsiteRecord extends CallsiteRecord {
+    filename: string;
+    lineNum: number;
+    stackFrames: IStackFrame[];
+    callsiteFrameIdx: number;
+    isV8Frames: boolean;
+}
+
+export interface IStackFrame {
+    getFileName: () => string;
+    getLineNumber: () => number;
+    getColumnNumber: () => number;
+}
+export interface ICallsiteRendererOption {
+    codeFrame: boolean;
+    frameSize: number;
+    stack: boolean;
 }
 
 export type TestCafeErrorType =

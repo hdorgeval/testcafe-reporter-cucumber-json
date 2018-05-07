@@ -11,6 +11,12 @@ const unknownBrowser: IBrowser = {
     version: "unknown",
 };
 
+/**
+ *
+ * @param userAgent - user agent given back by TestCafe.
+ * This string is in the form : '<browser> x.y.z / <platform> a.b.c'.
+ * For example: Firefox 59.0.0 / Mac OS X 10.12.0'
+ */
 export function getPlatformFrom(userAgent: string | undefined): IPlatform {
     if (userAgent === undefined) {
         return {
@@ -54,6 +60,12 @@ export function getPlatformFrom(userAgent: string | undefined): IPlatform {
     };
 }
 
+/**
+ *
+ * @param userAgent - user agent given back by TestCafe.
+ * This string is in the form : '<browser> x.y.z / <platform> a.b.c'.
+ * For example: Firefox 59.0.0 / Mac OS X 10.12.0'
+ */
 export function getDeviceFrom(userAgent: string | undefined): string {
     if (userAgent === undefined) {
         return "undefined";
@@ -108,6 +120,12 @@ export function extractNameAndVersion(input: string | undefined | null): INameVe
     };
 }
 
+/**
+ *
+ * @param userAgent - user agent given back by TestCafe.
+ * This string is in the form : '<browser> x.y.z / <platform> a.b.c'.
+ * For example: Firefox 59.0.0 / Mac OS X 10.12.0'
+ */
 export function getBrowserFrom(userAgent: string | undefined): IBrowser {
     if (userAgent === undefined) {
         return {

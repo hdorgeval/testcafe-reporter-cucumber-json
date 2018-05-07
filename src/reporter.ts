@@ -1,8 +1,9 @@
-// tslint:disable:no-console
 import * as chalk from "chalk";
 import { ICucumberJsonReport } from "./cucumber-json-interface";
 import {nativeFormatError, nativeNewLine, nativeSetIndent, nativeWrite} from "./reporter-helpers";
 import { IError, IExtendedReporterPlugin, ITestRunInfo } from "./reporter-interface";
+import { filterStackFramesIn, getAllFilesIn, stackFramesOf } from "./stack-frames-parser";
+import { getStackTraceHeaderFrom } from "./stack-trace-parser";
 
 export const extendedReporterPlugin: IExtendedReporterPlugin = {
     reportTaskStart(startTime: Date, userAgents: string[], testCount: number, report: ICucumberJsonReport ) {
@@ -50,15 +51,38 @@ export const extendedReporterPlugin: IExtendedReporterPlugin = {
     write: (text: string) => {
         return nativeWrite(text);
     },
-    renderErrors(errs: any[]): string {
+    renderErrors(errs: IError[]): string {
         const originalStackTraceLimit = Error.stackTraceLimit;
         Error.stackTraceLimit = 100;
         const lines: string[] = [];
         errs
-            .map((err: any, idx: number) => {
+            .map((err: IError, idx: number) => {
                 const prefix = this.chalk.red(`${idx + 1}) `);
-                lines.push(this.formatError(err, prefix));
+                filterStackFramesIn(err.callsite);
+                const originalStackFrames = [...err.callsite.stackFrames];
+                const files = getAllFilesIn(err.callsite);
+                let stackTraceHeader: string;
+                files.map( (filename: string, index: number) => {
+                    err.callsite.stackFrames = stackFramesOf(filename).in(originalStackFrames);
+                    err.callsite.filename = filename;
+                    err.callsite.lineNum = err.callsite.stackFrames[0].getLineNumber() - 1;
+                    const stackTrace = this.formatError(err, prefix);
+
+                    if (index === 0) {
+                        lines.push(stackTrace);
+                        stackTraceHeader = getStackTraceHeaderFrom(stackTrace);
+                        return;
+                    }
+                    if (stackTraceHeader) {
+                        const truncatedStackTrace = stackTrace.replace(stackTraceHeader, "");
+                        lines.push(truncatedStackTrace);
+                        return;
+                    }
+                    lines.push(stackTrace);
+
+                });
             });
+
         Error.stackTraceLimit = originalStackTraceLimit;
         return lines.join("\n");
     },
