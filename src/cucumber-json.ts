@@ -2,6 +2,7 @@ import { cliArgs } from "./command-line-args";
 import { IBrowser, ICucumberJsonReport, IFeatureReport, INameVersion,
     IPlatform, IScenario, IStep, StepStatus, testcafeDefaultStep } from "./cucumber-json-interface";
 import { ITestRunInfo } from "./reporter-interface";
+import { tagsFromPhrase } from "./tags-parser";
 import { getBrowserFrom, getDeviceFrom, getPlatformFrom } from "./user-agent-parser";
 export class CucumberJsonReport implements ICucumberJsonReport {
     // tslint:disable:variable-name
@@ -127,7 +128,7 @@ export class CucumberJsonReport implements ICucumberJsonReport {
             name: name || "undefined",
             runInfo: undefined,
             skipped: false,
-            tags: [],
+            tags: tagsFromPhrase(name),
             uri: `${path}:${index + 1}`,
         };
         this.currentFeature = featureReport;

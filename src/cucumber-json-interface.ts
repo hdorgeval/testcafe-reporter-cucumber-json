@@ -91,18 +91,6 @@ export interface ICustomReportData {
     title: string;
     data: IMetadata[];
 }
-
-export interface IConfiguration {
-    sourceFiles: string;
-    reportHeader: string;
-    reportTitle: string;
-    reportDir: string;
-    reportTempDir: string;
-    noisyTags: string[];
-    punctuations: string[];
-    verbose: boolean;
-}
-
 export interface ICucumberJsonReport {
     currentFeature: IFeatureReport | undefined;
     currentScenario: IScenario | undefined;

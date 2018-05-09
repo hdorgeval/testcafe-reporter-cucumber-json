@@ -56,6 +56,22 @@ report.generate({
 
 * run the command `npm run report`
 
+## Tagging
+
+* Tags enables to filter the html report;
+* Tags are generated dynamically from the: 
+    * fixture description
+    * test description (TBD)
+    * fixture file name (TBD)
+    * fixture folder hierarchy (TBD)
+    * new t.meta() syntax (TBD) 
+
+## Tags managment
+
+* Tags can be managed through the configuration file `testcafe-reporter-cucumber-json.json`
+    * this json file will be created on the first reporter run
+* To discard a tag, add this tag to the `noisyTags` section of the json configuration file.
+
 ## Error rendering
 
 * this reporter will report multiple code frames, one for each file reported in the stacktrace
