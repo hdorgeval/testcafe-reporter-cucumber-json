@@ -13,7 +13,7 @@ This is the **Cucumber JSON** reporter plugin for [TestCafe](http://devexpress.g
 
 * add to the testcafe command-line the following options:
 ```sh
---reporter cucumber-json:reports/report.json --reporter-app-name='My App' --reporter-app-version='x.y.z'
+testcafe chrome ./path-to-tests/*(.js|.testcafe|.ts) --reporter cucumber-json:reports/report.json --reporter-app-name='My App' --reporter-app-version='x.y.z'
 ```
 
 ## To generate the HTML report
