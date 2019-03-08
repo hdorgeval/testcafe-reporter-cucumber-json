@@ -166,5 +166,6 @@ export const browserNameMapping: {[index: string]: BrowserName} = {
     Firefox: "firefox",
     HeadlessChrome: "chrome",
     IE: "internet explorer",
+    Opera: "opera",
     Safari: "safari",
 };
