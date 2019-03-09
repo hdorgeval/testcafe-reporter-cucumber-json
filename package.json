@@ -37,7 +37,7 @@
   "homepage": "https://github.com/hdorgeval/testcafe-reporter-cucumber-json#readme",
   "dependencies": {
     "@types/minimist": "1.2.0",
-    "@types/node": "9.6.1",
+    "@types/node": "11.11.0",
     "@types/semver": "5.5.0",
     "callsite-record": "4.1.1",
     "chalk": "2.4.1",
@@ -45,7 +45,7 @@
     "rimraf": "2.6.2",
     "semver": "5.5.0",
     "testcafe": "0.19.2",
-    "ts-node": "6.0.2",
+    "ts-node": "8.0.3",
     "typescript": "3.3.3333"
   },
   "devDependencies": {
