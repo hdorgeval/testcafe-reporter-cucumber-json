@@ -162,7 +162,10 @@ export function getBrowserFrom(userAgent: string | undefined): IBrowser {
 
 export const browserNameMapping: {[index: string]: BrowserName} = {
     Chrome: "chrome",
+    Edge: "edge",
     Firefox: "firefox",
     HeadlessChrome: "chrome",
     IE: "internet explorer",
+    Opera: "opera",
+    Safari: "safari",
 };

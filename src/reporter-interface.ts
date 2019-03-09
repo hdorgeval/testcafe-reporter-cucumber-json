@@ -30,6 +30,15 @@ export interface ITestRunInfo {
     screenshotPath: string;
     skipped: boolean;
     errs: IError[];
+    screenshots: IScreenshot[];
+}
+
+export interface IScreenshot {
+    screenshotPath: string;
+    thumbnailPath: string;
+    userAgent: string;
+    quarantineAttempt: number | null;
+    takenOnFail: boolean;
 }
 
 export interface IError {

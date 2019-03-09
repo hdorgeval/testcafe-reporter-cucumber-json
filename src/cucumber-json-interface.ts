@@ -132,6 +132,7 @@ export type BrowserName =
 | "chrome"
 | "firefox"
 | "safari"
+| "opera"
 | "unknown"
 ;
 
