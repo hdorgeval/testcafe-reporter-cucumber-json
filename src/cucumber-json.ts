@@ -153,14 +153,14 @@ export class CucumberJsonReport implements ICucumberJsonReport {
         this.currentStep = this.createDefaultStep(name, testRunInfo);
         return this;
     }
-    public withError = (error: string) => {
-        if (this.currentStep) {
+    public withError = (error: string | undefined) => {
+        if (this.currentStep && error) {
             this.currentStep.result.error_message = error;
         }
         return this;
     }
     public withScreenshots = (paths: string[] | undefined) => {
-        if (paths && this.currentStep) {
+        if (Array.isArray(paths) && paths.length > 0 && this.currentStep) {
             this.currentStep.image = paths;
         }
         return this;

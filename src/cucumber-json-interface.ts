@@ -100,7 +100,7 @@ export interface ICucumberJsonReport {
     toJson: () => string;
     createFeature: (name: string, path: string) => this;
     createScenario: (name: string, testRunInfo: any) => this;
-    withError: (error: string) => this;
+    withError: (error: string | undefined) => this;
     withScreenshots: (path: string[] | undefined) => this;
 }
 

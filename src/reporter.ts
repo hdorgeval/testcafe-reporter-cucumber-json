@@ -15,29 +15,22 @@ export const extendedReporterPlugin: IExtendedReporterPlugin = {
         report.createFeature(name, path);
     },
     reportTestDone(name: string, testRunInfo: ITestRunInfo, report: ICucumberJsonReport) {
-        if (testRunInfo.errs && testRunInfo.errs.length > 0) {
-            const formattedErrorMessage = this.renderErrors(testRunInfo.errs);
-            const screenshotPaths = testRunInfo.errs
-                                    .map ((err: IError) => err.screenshotPath)
-                                    .filter((path) => path.endsWith(".png"));
-            report
-                .createScenario(name, testRunInfo)
-                .withError(formattedErrorMessage)
-                .withScreenshots(screenshotPaths);
-            return;
+        let formattedErrorMessage: string | undefined;
+        if (Array.isArray(testRunInfo.errs) && testRunInfo.errs.length > 0) {
+            formattedErrorMessage = this.renderErrors(testRunInfo.errs);
         }
 
-        if (testRunInfo.screenshots && testRunInfo.screenshots.length > 0) {
-            const screenshots = testRunInfo.screenshots
-                .map ((img) => img.screenshotPath);
-
-            report
-                .createScenario(name, testRunInfo)
-                .withScreenshots(screenshots);
-            return;
+        const screenshots: string[] = [];
+        if (Array.isArray(testRunInfo.screenshots) && testRunInfo.screenshots.length > 0) {
+            testRunInfo
+                .screenshots
+                .forEach ((img) =>  screenshots.push(img.screenshotPath));
         }
 
-        report.createScenario(name, testRunInfo);
+        report
+            .createScenario(name, testRunInfo)
+            .withError(formattedErrorMessage)
+            .withScreenshots(screenshots);
     },
     reportTaskDone(endTime: Date, passed: number, warnings: string[], report: ICucumberJsonReport) {
         if (report) {
