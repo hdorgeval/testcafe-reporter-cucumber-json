@@ -6,8 +6,7 @@ This is the **Cucumber JSON** reporter plugin for [TestCafe](http://devexpress.g
 
 This TestCafe reporter generates a json file that can be converted to a nice and searchable html report by using [multiple-cucumber-html-reporter](https://github.com/wswebcreation/multiple-cucumber-html-reporter).
 
-![report-header](media/report01.png)
-![report](media/report02.png)
+![report-sample](media/report01.png)
 
 
 ## To install this TestCafe Reporter
