@@ -26,17 +26,18 @@ export const extendedReporterPlugin: IExtendedReporterPlugin = {
                 .withScreenshots(screenshotPaths);
             return;
         }
-        report.createScenario(name, testRunInfo);
 
         if (testRunInfo.screenshots && testRunInfo.screenshots.length > 0) {
             const screenshots = testRunInfo.screenshots
-                                .map ((img) => img.screenshotPath);
+                .map ((img) => img.screenshotPath);
+
             report
                 .createScenario(name, testRunInfo)
                 .withScreenshots(screenshots);
-        } else {
-            report.createScenario(name, testRunInfo);
+            return;
         }
+
+        report.createScenario(name, testRunInfo);
     },
     reportTaskDone(endTime: Date, passed: number, warnings: string[], report: ICucumberJsonReport) {
         if (report) {
