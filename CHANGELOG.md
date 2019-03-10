@@ -7,7 +7,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [1.0.0] - 2019-03-10
 
-### Unreleased
+### Changed
 
 - Support report with screenshots by including screenshots to report.json ([Tareq El-Masri](https://github.com/TareqElMasri))
 - Update all dependencies
