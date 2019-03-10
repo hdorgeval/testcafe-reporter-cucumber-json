@@ -146,3 +146,9 @@ report.generate({
       at test (/Users/HDO/VSCodeProjects/testcafe-starter/features/testcafe-sample-page.spec.ts:23:66)
 
 ````
+
+## Contributors
+
+- [Tareq El-Masri](https://github.com/TareqElMasri)
+- [Tom Ardern](https://github.com/tomardern)
+- [Henri d'Orgeval](https://github.com/hdorgeval)
