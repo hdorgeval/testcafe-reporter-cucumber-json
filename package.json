@@ -14,7 +14,6 @@
     "tslint:init": "tslint --init",
     "lint": "tslint --format stylish --config tslint.json 'src/**/*.ts'",
     "build": "npm run lint && rimraf lib && tsc ",
-    "publish-please": "publish-please",
     "package": "npm run build && npm run rimraf:package && rm -f my*.tgz && npm pack",
     "rimraf:package": "rimraf ./package"
   },
