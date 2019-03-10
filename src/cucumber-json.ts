@@ -151,6 +151,7 @@ export class CucumberJsonReport implements ICucumberJsonReport {
         };
         this.currentScenario = scenario;
         this.currentStep = this.createDefaultStep(name, testRunInfo);
+        this.currentScenario.status = this.currentStep.result.status;
         return this;
     }
     public withError = (error: string | undefined) => {
