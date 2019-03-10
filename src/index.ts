@@ -2,9 +2,9 @@
 import { CucumberJsonReport } from "./cucumber-json";
 import { ICucumberJsonReport } from "./cucumber-json-interface";
 import { extendedReporterPlugin } from "./reporter";
-import { IReporter } from "./reporter-interface";
 
-const reporter: () => IReporter = () => {
+// tslint:disable-next-line:no-string-literal
+exports["default"] = () => {
     const report: ICucumberJsonReport = new CucumberJsonReport();
     return {
         reportFixtureStart(name: string, path: string) {
@@ -28,4 +28,5 @@ const reporter: () => IReporter = () => {
     };
 };
 
-export = reporter;
+// tslint:disable-next-line:no-string-literal
+module.exports = exports["default"];
