@@ -40,9 +40,9 @@
     "@types/node": "11.11.0",
     "@types/semver": "5.5.0",
     "callsite-record": "4.1.1",
-    "chalk": "2.4.1",
+    "chalk": "2.4.2",
     "minimist": "1.2.0",
-    "rimraf": "2.6.2",
+    "rimraf": "2.6.3",
     "semver": "5.6.0",
     "ts-node": "8.0.3",
     "typescript": "3.3.3333"
