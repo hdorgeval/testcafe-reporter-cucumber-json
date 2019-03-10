@@ -11,6 +11,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 - Support report with screenshots by including screenshots to report.json ([Tareq El-Masri](https://github.com/TareqElMasri))
 - Update all dependencies
+- Update documentation
 - Remove TestCafe dependency and set it as peer dependency
 
 
