@@ -126,7 +126,12 @@ export class CucumberJsonReport implements ICucumberJsonReport {
                 device: this._currentDevice,
                 platform: this._currentPlatform,
             },
-            name: name || "undefined",
+            name: name
+                ? name
+                    .replace("Feature:", "")
+                    .replace("Feature :", "")
+                    .trim()
+                : "undefined",
             runInfo: undefined,
             skipped: false,
             tags: tagsFromPhrase(name),
@@ -141,7 +146,12 @@ export class CucumberJsonReport implements ICucumberJsonReport {
             id: `Scenario${scenarioId}`,
             keyword: "Scenario",
             line: 0,
-            name: name || "undefined",
+            name: name
+                ? name
+                    .replace("Scenario:", "")
+                    .replace("Scenario :", "")
+                    .trim()
+                : "undefined",
             skipped: testRunInfo.skipped,
             sourceLine: "undefined",
             status: "passed",
