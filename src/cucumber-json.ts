@@ -1,6 +1,7 @@
 import { cliArgs } from "./command-line-args";
 import { IBrowser, ICucumberJsonReport, IFeatureReport, INameVersion,
     IPlatform, IScenario, IStep, StepStatus, testcafeDefaultStep } from "./cucumber-json-interface";
+import { toBase64DataImageUrl } from "./fs";
 import { ITestRunInfo } from "./reporter-interface";
 import { tagsFromPhrase } from "./tags-parser";
 import { getBrowserFrom, getDeviceFrom, getPlatformFrom } from "./user-agent-parser";
@@ -162,10 +163,12 @@ export class CucumberJsonReport implements ICucumberJsonReport {
     }
     public withScreenshots = (paths: string[] | undefined) => {
         if (Array.isArray(paths) && paths.length > 0 && this.currentStep) {
-            this.currentStep.image = paths;
+            this.currentStep.image = paths
+                .map(toBase64DataImageUrl);
         }
         return this;
     }
+
     private createDefaultStep = (name: string, testRunInfo: ITestRunInfo): IStep => {
         let stepStatus: StepStatus = testRunInfo.skipped
                             ? "skipped"

@@ -1,5 +1,5 @@
 import { existsSync, mkdirSync, PathLike, readdirSync, readFileSync, statSync, writeFileSync } from "fs";
-import { join, sep } from "path";
+import { extname, join, sep } from "path";
 
 const isDirectory = (path: PathLike) => statSync(path).isDirectory();
 const ignoreNodeModule = (path: string) => path.indexOf("node_modules") < 0;
@@ -107,4 +107,18 @@ export const fileExists = (filePath: string): boolean => {
   }
 
   return false;
+};
+
+export const fileExtension = (filePath: string): string => {
+  const extension = extname(filePath);
+  return extension.startsWith(".")
+    ? extension.replace(".", "")
+    : extension;
+};
+
+export const toBase64DataImageUrl = (path: string) => {
+  const imageType =  fileExtension(path);
+  const base64Data = readFileSync(path).toString("base64");
+  const dataUrl = `data:image/${imageType};base64,${base64Data}`;
+  return dataUrl;
 };
