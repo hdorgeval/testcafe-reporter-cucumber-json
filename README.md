@@ -149,7 +149,11 @@ report.generate({
       at __awaiter (/Users/HDO/VSCodeProjects/testcafe-starter/features/testcafe-sample-page.spec.ts:3:12)
       at test (/Users/HDO/VSCodeProjects/testcafe-starter/features/testcafe-sample-page.spec.ts:23:66)
 
-````
+```
+
+## Screenshot rendering
+
+* this reporter embeds all screenshots as base 64 images, making the generated json file completely autonomous.
 
 ## Contributors
 
