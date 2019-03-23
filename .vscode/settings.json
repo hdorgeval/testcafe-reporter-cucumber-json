@@ -9,7 +9,8 @@
     },
     "typescript.referencesCodeLens.enabled": true,
     "typescript.implementationsCodeLens.enabled": true,
-    "editor.tabCompletion": true,
+    "editor.tabCompletion": "on",
     "editor.minimap.enabled": true,
-    "editor.mouseWheelZoom": true
+    "editor.mouseWheelZoom": true,
+    "editor.formatOnSave": true
 }
