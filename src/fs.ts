@@ -1,27 +1,35 @@
-import { existsSync, mkdirSync, PathLike, readdirSync, readFileSync, statSync, writeFileSync } from "fs";
-import { extname, join, sep } from "path";
+import {
+  existsSync,
+  mkdirSync,
+  PathLike,
+  readdirSync,
+  readFileSync,
+  statSync,
+  writeFileSync,
+} from 'fs';
+import { extname, join, sep } from 'path';
 
 const isDirectory = (path: PathLike) => statSync(path).isDirectory();
-const ignoreNodeModule = (path: string) => path.indexOf("node_modules") < 0;
-const ignoreDotDir = (path: string) => path.startsWith(".") === false;
-const ignoreBuildDir = (path: string) => path.startsWith("build") === false;
+const ignoreNodeModule = (path: string) => path.indexOf('node_modules') < 0;
+const ignoreDotDir = (path: string) => path.startsWith('.') === false;
+const ignoreBuildDir = (path: string) => path.startsWith('build') === false;
 const getDirectoriesIn = (path: PathLike): string[] => {
-    return readdirSync(path)
-      .map((name) => join(path.toString(), name))
-      .filter(isDirectory)
-      .filter(ignoreNodeModule)
-      .filter(ignoreDotDir)
-      .filter(ignoreBuildDir);
+  return readdirSync(path)
+    .map((name) => join(path.toString(), name))
+    .filter(isDirectory)
+    .filter(ignoreNodeModule)
+    .filter(ignoreDotDir)
+    .filter(ignoreBuildDir);
 };
 const isFile = (path: PathLike) => statSync(path).isFile();
 
 const defaultFileFilter = () => true;
 
 const getFilesInDirectory = (path: PathLike, fileFilter?: (path: string) => boolean) =>
-      readdirSync(path)
-      .map((name) => join(path.toString(), name))
-      .filter(isFile)
-      .filter(fileFilter || defaultFileFilter );
+  readdirSync(path)
+    .map((name) => join(path.toString(), name))
+    .filter(isFile)
+    .filter(fileFilter || defaultFileFilter);
 
 const getDirectoriesRecursivelyIn = (path: string): string[] => {
   const subDirs = getDirectoriesIn(path);
@@ -33,14 +41,16 @@ const getDirectoriesRecursivelyIn = (path: string): string[] => {
   return result;
 };
 
-export const getFilesRecursivelyIn = (directoryPath: string, fileFilter?: (path: string) => boolean): string[] => {
+export const getFilesRecursivelyIn = (
+  directoryPath: string,
+  fileFilter?: (path: string) => boolean,
+): string[] => {
   const dirs = [directoryPath];
-  getDirectoriesRecursivelyIn(directoryPath)
-    .map( (dir) => dirs.push(dir));
+  getDirectoriesRecursivelyIn(directoryPath).map((dir) => dirs.push(dir));
 
   const files = dirs
-      .map((dir) => getFilesInDirectory(dir, fileFilter))
-      .reduce((a, b) => a.concat(b), []);
+    .map((dir) => getFilesInDirectory(dir, fileFilter))
+    .reduce((a, b) => a.concat(b), []);
   return files;
 };
 
@@ -51,36 +61,30 @@ export const writeJsonFileSync = (data: any, ...paths: string[]) => {
   writeFileSync(filePath, json);
 };
 
-export const readAllLines = (filePath: string): string[] =>  {
-  const lines =  readFileSync(filePath, "utf8")
-                .split("\n");
+export const readAllLines = (filePath: string): string[] => {
+  const lines = readFileSync(filePath, 'utf8').split('\n');
   return lines;
 };
 
 export const getParentDirs = (filePath: string) => {
-  const paths = filePath
-    .split(sep)
-    .filter((dir) => dir !== ".");
+  const paths = filePath.split(sep).filter((dir) => dir !== '.');
 
   const dirs = paths.splice(0, paths.length - 1);
   return dirs;
 };
 
 export const getFilename = (filePath: string): string | undefined => {
-  const filename = filePath
-    .split(sep)
-    .pop();
+  const filename = filePath.split(sep).pop();
   return filename;
 };
 
 const ensureDirectoryStructureExists = (filePath: string) => {
   const dirs = getParentDirs(filePath);
-  let partialPath: string = ".";
-  dirs
-    .map((dir) => {
-      partialPath = [partialPath, dir].join(sep);
-      ensureDirectoryExists(partialPath);
-    });
+  let partialPath: string = '.';
+  dirs.map((dir) => {
+    partialPath = [partialPath, dir].join(sep);
+    ensureDirectoryExists(partialPath);
+  });
 };
 
 const ensureDirectoryExists = (directoryPath: string) => {
@@ -94,7 +98,7 @@ export const jsonFrom = (filePath: string): any => {
   if (!isFile(filePath)) {
     return {};
   }
-  return JSON.parse(readFileSync(filePath, "utf8"));
+  return JSON.parse(readFileSync(filePath, 'utf8'));
 };
 
 export const fileExists = (filePath: string): boolean => {
@@ -111,14 +115,12 @@ export const fileExists = (filePath: string): boolean => {
 
 export const fileExtension = (filePath: string): string => {
   const extension = extname(filePath);
-  return extension.startsWith(".")
-    ? extension.replace(".", "")
-    : extension;
+  return extension.startsWith('.') ? extension.replace('.', '') : extension;
 };
 
 export const toBase64DataImageUrl = (path: string) => {
-  const imageType =  fileExtension(path);
-  const base64Data = readFileSync(path).toString("base64");
+  const imageType = fileExtension(path);
+  const base64Data = readFileSync(path).toString('base64');
   const dataUrl = `data:image/${imageType};base64,${base64Data}`;
   return dataUrl;
 };

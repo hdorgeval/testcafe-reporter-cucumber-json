@@ -1,9 +1,9 @@
-import { IReporterlPluginHost } from "./reporter-interface";
+import { ReporterlPluginHost } from './reporter-interface';
 
 // tslint:disable:no-var-requires
-const ReporterPluginHost = require("testcafe/lib/reporter/plugin-host");
-const outStream: string = "";
-const plugin: IReporterlPluginHost = new ReporterPluginHost({}, outStream);
+const ReporterPluginHost = require('testcafe/lib/reporter/plugin-host');
+const outStream: string = '';
+const plugin: ReporterlPluginHost = new ReporterPluginHost({}, outStream);
 
 export const nativeWrite = plugin.write;
 export const nativeSetIndent = plugin.setIndent;

@@ -1,18 +1,18 @@
-import { defaultOptions, IOption } from "./default-options";
-import { fileExists, jsonFrom, writeJsonFileSync } from "./fs";
+import { defaultOptions, ReporterOption } from './default-options';
+import { fileExists, jsonFrom, writeJsonFileSync } from './fs';
 
-export const defaultConfigurationFilePath = "testcafe-reporter-cucumber-json.json";
+export const defaultConfigurationFilePath = 'testcafe-reporter-cucumber-json.json';
 const ensureConfigFileExists = (filepath: string) => {
-    if (fileExists(filepath)) {
-        return;
-    }
-    writeJsonFileSync(defaultOptions, defaultConfigurationFilePath);
+  if (fileExists(filepath)) {
+    return;
+  }
+  writeJsonFileSync(defaultOptions, defaultConfigurationFilePath);
 };
 
 ensureConfigFileExists(defaultConfigurationFilePath);
-const defaultConfig = jsonFrom(defaultConfigurationFilePath) as IOption;
+const defaultConfig = jsonFrom(defaultConfigurationFilePath) as ReporterOption;
 
-const defaultSeparators = [" ", "\n"];
+const defaultSeparators = [' ', '\n'];
 defaultConfig.separators = defaultConfig.separators || [];
 defaultConfig.separators.push(...defaultSeparators);
 
