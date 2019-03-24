@@ -8,7 +8,7 @@
     "testcafe-reporter-cucumber-json": "./bin/testcafe-reporter-cucumber-json.js"
   },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "jest--init": "jest --init",
     "check-format": "prettier --list-different \"{bin,src}/**/*.ts\"",
     "format": "prettier --write \"{bin,src}/**/*.ts\"",
     "tsc": " tsc --listEmittedFiles",
@@ -17,7 +17,8 @@
     "lint": "tslint --format stylish --config tslint.json 'src/**/*.ts'",
     "build": "npm run format && npm run lint && rimraf lib && tsc ",
     "package": "npm run build && npm run rimraf:package && rm -f my*.tgz && npm pack",
-    "rimraf:package": "rimraf ./package"
+    "rimraf:package": "rimraf ./package",
+    "test": "npm run build && npm run package && jest --config=jest.config.js --runInBand"
   },
   "repository": {
     "type": "git",
@@ -49,7 +50,10 @@
     "typescript": "3.3.3333"
   },
   "devDependencies": {
+    "@types/jest": "24.0.11",
+    "jest": "24.5.0",
     "prettier": "1.16.4",
+    "ts-jest": "24.0.0",
     "tslint": "5.13.1",
     "tslint-config-prettier": "1.18.0"
   },

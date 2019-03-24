@@ -1,6 +1,6 @@
 *
 !bin/**/*
 !lib/**/*
-lib/**/*.spec.*
+lib/**/*.test.*
 !package.json
 !*.md
