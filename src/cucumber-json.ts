@@ -8,11 +8,12 @@ import {
   Scenario,
   Step,
   StepStatus,
+  Tag,
   testcafeDefaultStep,
 } from './cucumber-json-interfaces';
 import { toBase64DataImageUrl } from './fs';
 import { TestRunInfo } from './reporter-interface';
-import { tagsFromDescription } from './tags-parser';
+import { distinct, tagsFromDescription } from './tags-parser';
 import { getBrowserFrom, getDeviceFrom, getPlatformFrom } from './user-agent-parser';
 export class CucumberJsonReport implements CucumberJsonReportInterface {
   // tslint:disable:variable-name
@@ -172,6 +173,7 @@ export class CucumberJsonReport implements CucumberJsonReportInterface {
     this.currentScenario = scenario;
     this.currentStep = this.createDefaultStep(name, testRunInfo);
     this.currentScenario.status = this.currentStep.result.status;
+    this.addTagsToCurrentFeature(tagsFromDescription(name));
     return this;
   };
   public withError = (error: string | undefined) => {
@@ -227,5 +229,24 @@ export class CucumberJsonReport implements CucumberJsonReportInterface {
     const result = featureName ? featureName : `Feature${this._features.length + 1}`;
     // TODO: ensure this generated id is unique: if not prefix with filename
     return result;
+  };
+
+  private addTagsToCurrentFeature = (tags: Tag[]): void => {
+    if (this.currentFeature === undefined) {
+      return;
+    }
+    const currentFeatureTagNames = this.currentFeature.tags.map((tag) => tag.name);
+
+    const toBeAddedTagNames = tags.map((tag) => tag.name);
+
+    const aggregatedTagNames = distinct([
+      ...currentFeatureTagNames,
+      ...toBeAddedTagNames,
+    ]);
+
+    this.currentFeature.tags = aggregatedTagNames.map((tagName) => ({
+      line: 0,
+      name: tagName,
+    }));
   };
 }
