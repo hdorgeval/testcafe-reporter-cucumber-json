@@ -1,6 +1,5 @@
 export interface ReporterOption {
   noisyTags: string[];
-  separators: string[];
   verbose: boolean;
 }
 export const defaultOptions: ReporterOption = {
@@ -27,6 +26,5 @@ export const defaultOptions: ReporterOption = {
     'when',
     'with',
   ],
-  separators: ['.', ':', '!', ',', ';'],
   verbose: false,
 };

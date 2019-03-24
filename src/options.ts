@@ -12,8 +12,4 @@ const ensureConfigFileExists = (filepath: string) => {
 ensureConfigFileExists(defaultConfigurationFilePath);
 const defaultConfig = jsonFrom(defaultConfigurationFilePath) as ReporterOption;
 
-const defaultSeparators = [' ', '\n'];
-defaultConfig.separators = defaultConfig.separators || [];
-defaultConfig.separators.push(...defaultSeparators);
-
 export const options = defaultConfig;

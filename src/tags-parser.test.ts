@@ -61,3 +61,21 @@ test('It should take only distinct tags', () => {
   // Then
   expect(result).toBe(1);
 });
+
+test('It should split with separators /s|\n|\r|.|:|!|,|;/', () => {
+  // Given
+  const description = 'foo bar.foobar:fizz!buzz,yep;nope';
+
+  // When
+  const result = tagsFromDescription(description).map((tag) => tag.name);
+
+  // Then
+  expect(result.includes('@foo')).toBe(true);
+  expect(result.includes('@bar')).toBe(true);
+  expect(result.includes('@foobar')).toBe(true);
+  expect(result.includes('@fizz')).toBe(true);
+  expect(result.includes('@buzz')).toBe(true);
+  expect(result.includes('@yep')).toBe(true);
+  expect(result.includes('@nope')).toBe(true);
+  expect(result.length).toBe(7);
+});

@@ -2,29 +2,18 @@ import { Tag } from './cucumber-json-interfaces';
 import { options } from './options';
 
 export const tagsFromDescription = (description: string): Tag[] => {
-  const tags: Tag[] = [];
   if (description === undefined) {
-    return tags;
+    return [];
   }
-  let words: string[] = [description];
-  options.separators.map((separator: string) => {
-    const splittedWords: string[] = [];
-    words.map((word) => {
-      word
-        .split(separator)
-        .map((w) => w.trim())
-        .filter((w) => w.length > 2)
-        .filter((w) => !isNoisyTag(w, options.noisyTags))
-        .map((w) => w.toLocaleLowerCase())
-        .map((w) => splittedWords.push(w));
-    });
-    words = [...splittedWords];
-  });
 
-  distinct(words)
-    .map((word) => ({ name: `@${word}`, line: 0 }))
-    .map((tag) => tags.push(tag));
-  return tags;
+  const words = description
+    .split(/\s|\n|\r|\.|\:|!|,|;/)
+    .map((w) => w.trim())
+    .filter((w) => w.length > 2)
+    .map((w) => w.toLocaleLowerCase())
+    .filter((w) => !isNoisyTag(w, options.noisyTags));
+
+  return distinct(words).map((word) => ({ name: `@${word}`, line: 0 }));
 };
 export const isNoisyTag = (tag: string, unwantedTags: string[]): boolean => {
   if (unwantedTags && unwantedTags.length === 0) {
