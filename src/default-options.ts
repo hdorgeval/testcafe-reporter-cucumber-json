@@ -5,6 +5,7 @@ export interface ReporterOption {
 }
 export const defaultOptions: ReporterOption = {
   noisyTags: [
+    '(t)',
     'able',
     'and',
     'async',
@@ -18,13 +19,13 @@ export const defaultOptions: ReporterOption = {
     'not',
     'only',
     'scenario',
+    'should',
     'spec',
+    'test',
     'the',
     'then',
-    'test',
-    'with',
     'when',
-    '(t)',
+    'with',
   ],
   separators: ['.', ':', '!', ',', ';'],
   verbose: false,
