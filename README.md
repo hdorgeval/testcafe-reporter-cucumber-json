@@ -8,77 +8,78 @@ This TestCafe reporter generates a json file that can be converted to a nice and
 
 ![report-sample](media/report01.png)
 
-
 ## To install this TestCafe Reporter
 
-* run the command `npm install --save testcafe-reporter-cucumber-json`.
+- run the command `npm install --save testcafe-reporter-cucumber-json`.
 
 ## Usage
 
-* add to the testcafe command-line the following options:
+- add to the testcafe command-line the following options:
+
 ```sh
 testcafe chrome ./path-to-tests/*(.js|.testcafe|.ts) --reporter cucumber-json:reports/report.json --reporter-app-name='My App' --reporter-app-version='x.y.z'
 ```
 
 ## To generate the HTML report
 
-* install  [multiple-cucumber-html-reporter](https://github.com/wswebcreation/multiple-cucumber-html-reporter) (version >= 1.10.0):
-    * `npm install --save-dev multiple-cucumber-html-reporter`
+- install [multiple-cucumber-html-reporter](https://github.com/wswebcreation/multiple-cucumber-html-reporter) (version >= 1.10.0):
 
-* Create a `report-generator.js` file at the project root:
+  - `npm install --save-dev multiple-cucumber-html-reporter`
+
+- Create a `report-generator.js` file at the project root:
 
 ```javascript
 const report = require('multiple-cucumber-html-reporter');
 const path = require('path');
 const projectName = path.basename(__dirname);
 const projectVersion = process.env.npm_package_version;
-const reportGenerationTime = (new Date()).toISOString();
+const reportGenerationTime = new Date().toISOString();
 report.generate({
-    reportName: 'TestCafe Report',
-	jsonDir: 'reports',
-    reportPath: 'reports',
-    openReportInBrowser: true,
-    disableLog: true,
-    displayDuration: true,
-    durationInMS: true,
-    customData: {
-        title: 'Run info',
-        data: [
-            {label: 'Project', value: `${projectName}`},
-            {label: 'Release', value: `${projectVersion}`},
-            {label: 'Report Generation Time', value: `${reportGenerationTime}`},
-            
-        ]
-    }
+  reportName: 'TestCafe Report',
+  jsonDir: 'reports',
+  reportPath: 'reports',
+  openReportInBrowser: true,
+  disableLog: true,
+  displayDuration: true,
+  durationInMS: true,
+  customData: {
+    title: 'Run info',
+    data: [
+      { label: 'Project', value: `${projectName}` },
+      { label: 'Release', value: `${projectVersion}` },
+      { label: 'Report Generation Time', value: `${reportGenerationTime}` },
+    ],
+  },
 });
 ```
 
-* insert the following script in the `package.json` file:
+- insert the following script in the `package.json` file:
+
 ```javascript
 "report": "node report-generator.js",
 ```
 
-* run the command `npm run report`
+- run the command `npm run report`
 
 ## Tagging
 
-* Tags enables to filter the html report;
-* Tags are generated dynamically from the: 
-    * fixture description
-    * test description (TBD)
-    * fixture file name (TBD)
-    * fixture folder hierarchy (TBD)
-    * new t.meta() syntax (TBD) 
+- Tags enables to filter the html report;
+- Tags are generated dynamically from the:
+  - fixture description
+  - test description
+  - fixture file name (TBD)
+  - fixture folder hierarchy (TBD)
+  - new t.meta() syntax (TBD)
 
 ## Tags managment
 
-* Tags can be managed through the configuration file `testcafe-reporter-cucumber-json.json`
-    * this json file will be created on the first reporter run
-* To discard a tag, add this tag to the `noisyTags` section of the json configuration file.
+- Tags can be managed through the configuration file `testcafe-reporter-cucumber-json.json`
+  - this json file will be created on the first reporter run
+- To discard a tag, add this tag to the `noisyTags` section of the json configuration file.
 
 ## Error rendering
 
-* this reporter will report multiple code frames, one for each file reported in the stacktrace
+- this reporter will report multiple code frames, one for each file reported in the stacktrace
 
 ```text
 1) The specified selector does not match any element in the DOM tree.
@@ -153,7 +154,7 @@ report.generate({
 
 ## Screenshot rendering
 
-* this reporter embeds all screenshots as base 64 images, making the generated json file completely autonomous.
+- this reporter embeds all screenshots as base 64 images, making the generated json file completely autonomous.
 
 ## Contributors
 
