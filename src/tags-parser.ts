@@ -1,12 +1,12 @@
 import { Tag } from './cucumber-json-interfaces';
 import { options } from './options';
 
-export const tagsFromPhrase = (phrase: string): Tag[] => {
+export const tagsFromDescription = (description: string): Tag[] => {
   const tags: Tag[] = [];
-  if (phrase === undefined) {
+  if (description === undefined) {
     return tags;
   }
-  let words: string[] = [phrase];
+  let words: string[] = [description];
   options.separators.map((separator: string) => {
     const splittedWords: string[] = [];
     words.map((word) => {

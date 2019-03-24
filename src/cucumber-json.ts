@@ -12,7 +12,7 @@ import {
 } from './cucumber-json-interfaces';
 import { toBase64DataImageUrl } from './fs';
 import { TestRunInfo } from './reporter-interface';
-import { tagsFromPhrase } from './tags-parser';
+import { tagsFromDescription } from './tags-parser';
 import { getBrowserFrom, getDeviceFrom, getPlatformFrom } from './user-agent-parser';
 export class CucumberJsonReport implements CucumberJsonReportInterface {
   // tslint:disable:variable-name
@@ -143,7 +143,7 @@ export class CucumberJsonReport implements CucumberJsonReportInterface {
         : 'undefined',
       runInfo: undefined,
       skipped: false,
-      tags: tagsFromPhrase(name),
+      tags: tagsFromDescription(name),
       uri: `${path}:${index + 1}`,
     };
     this.currentFeature = featureReport;
