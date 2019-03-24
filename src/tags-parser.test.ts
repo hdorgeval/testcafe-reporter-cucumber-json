@@ -45,4 +45,19 @@ test('It should ignore noisy tags', () => {
   expect(result.includes('@but')).toBe(false);
   expect(result.includes('@not')).toBe(false);
   expect(result.includes('@should')).toBe(false);
+  expect(result.includes('@and')).toBe(false);
+});
+
+test('It should take only distinct tags', () => {
+  // Given
+  const description =
+    'scenario: it should ignore yo but it should not ignore foo and bar';
+
+  // When
+  const result = tagsFromDescription(description)
+    .map((tag) => tag.name)
+    .filter((word) => word === '@ignore').length;
+
+  // Then
+  expect(result).toBe(1);
 });
