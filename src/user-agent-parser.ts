@@ -23,8 +23,8 @@ export function getPlatformFrom(userAgent: string | undefined): Platform {
       ...unknownPlatform,
     };
   }
-
-  const parts = userAgent.split('/');
+  const sanitizedUserAgent = userAgent.replace(/\(https\:.*\)/gi, '');
+  const parts = sanitizedUserAgent.split('/');
   if (parts.length <= 1) {
     // tslint:disable-next-line:no-console
     console.warn(
