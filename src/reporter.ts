@@ -71,10 +71,36 @@ export const extendedReporterPlugin: ExtendedReporterPlugin = {
     return nativeWrite(text);
   },
   renderErrors(errs: CallsiteError[]): string {
+    if (!Array.isArray(errs)) {
+      // tslint:disable-next-line:no-console
+      console.warn(
+        `testcafe-reporter-cucumber-json: cannot render errors because the error object is not an array`,
+      );
+      // tslint:disable-next-line:no-console
+      console.warn(
+        `testcafe-reporter-cucumber-json: please provide the following log to github.com/hdorgeval/testcafe-reporter-cucumber-json :`,
+      );
+      // tslint:disable-next-line:no-console
+      console.warn(`testcafe-reporter-cucumber-json :`, { errs });
+    }
+
     const originalStackTraceLimit = Error.stackTraceLimit;
     Error.stackTraceLimit = 100;
     const lines: string[] = [];
     errs.map((err, idx) => {
+      if (!err.callsite) {
+        // tslint:disable-next-line:no-console
+        console.warn(
+          `testcafe-reporter-cucumber-json: cannot render error because the callsite object is missing in the error object`,
+        );
+        // tslint:disable-next-line:no-console
+        console.warn(
+          `testcafe-reporter-cucumber-json: please provide the following log to github.com/hdorgeval/testcafe-reporter-cucumber-json :`,
+        );
+        // tslint:disable-next-line:no-console
+        console.warn(`testcafe-reporter-cucumber-json :`, { err });
+        return;
+      }
       const prefix = this.chalk.red(`${idx + 1}) `);
       filterStackFramesIn(err.callsite);
       const originalStackFrames = [...err.callsite.stackFrames];

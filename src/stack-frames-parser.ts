@@ -1,22 +1,44 @@
 import { CallsiteInterface, StackFrame } from './reporter-interface';
 
 export const filterStackFramesIn = (callsite: CallsiteInterface) => {
-  const filteredStackFrames = getCurrentAppStackFramesFrom(callsite);
-  callsite.stackFrames = filteredStackFrames;
-  callsite.callsiteFrameIdx = 0;
+  if (callsite) {
+    ensureCallsiteAndStackFramesAreValid(callsite);
+    const filteredStackFrames = getCurrentAppStackFramesFrom(callsite);
+    callsite.stackFrames = filteredStackFrames;
+    callsite.callsiteFrameIdx = 0;
+  }
 };
+
+function ensureCallsiteAndStackFramesAreValid(callsite: CallsiteInterface) {
+  if (!Array.isArray(callsite.stackFrames)) {
+    // tslint:disable-next-line:no-console
+    console.warn(
+      `testcafe-reporter-cucumber-json: cannot render errors because the callsite object has unexpected content`,
+    );
+    // tslint:disable-next-line:no-console
+    console.warn(
+      `testcafe-reporter-cucumber-json: please provide the following log to github.com/hdorgeval/testcafe-reporter-cucumber-json :`,
+    );
+    // tslint:disable-next-line:no-console
+    console.warn(`testcafe-reporter-cucumber-json :`, {
+      stackFrames: callsite.stackFrames,
+    });
+  }
+}
 
 export const getCurrentAppStackFramesFrom = (
   callsite: CallsiteInterface,
 ): StackFrame[] => {
   const result: StackFrame[] = [];
-  callsite.stackFrames.map((stackFrame: StackFrame) => {
-    const filename = getFileNameFrom(stackFrame);
-    if (isNodeModuleOrIsNullOrUndefined(filename)) {
-      return;
-    }
-    result.push(stackFrame);
-  });
+  if (callsite && Array.isArray(callsite.stackFrames)) {
+    callsite.stackFrames.map((stackFrame: StackFrame) => {
+      const filename = getFileNameFrom(stackFrame);
+      if (isNodeModuleOrIsNullOrUndefined(filename)) {
+        return;
+      }
+      result.push(stackFrame);
+    });
+  }
   return result;
 };
 export const getFileNameFrom = (stackFrame: StackFrame): string | null | undefined => {
