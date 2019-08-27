@@ -72,36 +72,28 @@ export const extendedReporterPlugin: ExtendedReporterPlugin = {
   },
   renderErrors(errs: CallsiteError[]): string {
     if (!Array.isArray(errs)) {
-      // tslint:disable-next-line:no-console
-      console.warn(
-        `testcafe-reporter-cucumber-json: cannot render errors because the error object is not an array`,
-      );
-      // tslint:disable-next-line:no-console
-      console.warn(
-        `testcafe-reporter-cucumber-json: please provide the following log to github.com/hdorgeval/testcafe-reporter-cucumber-json :`,
-      );
-      // tslint:disable-next-line:no-console
-      console.warn(`testcafe-reporter-cucumber-json :`, { errs });
+      reportUnexpectedErrObject(errs);
+      return 'Error: reporter cucumber-json has detected an unexpected error object. Please see details in the console logs';
     }
 
     const originalStackTraceLimit = Error.stackTraceLimit;
     Error.stackTraceLimit = 100;
     const lines: string[] = [];
     errs.map((err, idx) => {
-      if (!err.callsite) {
-        // tslint:disable-next-line:no-console
-        console.warn(
-          `testcafe-reporter-cucumber-json: cannot render error because the callsite object is missing in the error object`,
-        );
-        // tslint:disable-next-line:no-console
-        console.warn(
-          `testcafe-reporter-cucumber-json: please provide the following log to github.com/hdorgeval/testcafe-reporter-cucumber-json :`,
-        );
-        // tslint:disable-next-line:no-console
-        console.warn(`testcafe-reporter-cucumber-json :`, { err });
+      const prefix = this.chalk.red(`${idx + 1}) `);
+
+      if (err && typeof err.callsite === 'string') {
+        reportUnexpectedErrObject(err);
+        lines.push(renderNativeError(() => this.formatError(err, prefix)));
         return;
       }
-      const prefix = this.chalk.red(`${idx + 1}) `);
+
+      if (!err.callsite) {
+        reportUnexpectedErrObject(err);
+        lines.push(renderNativeError(() => this.formatError(err, prefix)));
+        return;
+      }
+
       filterStackFramesIn(err.callsite);
       const originalStackFrames = [...err.callsite.stackFrames];
       const files = getAllFilesIn(err.callsite);
@@ -171,3 +163,28 @@ export const extendedReporterPlugin: ExtendedReporterPlugin = {
     };
   },
 };
+
+function reportUnexpectedErrObject(err: unknown) {
+  // tslint:disable-next-line:no-console
+  console.warn(
+    `testcafe-reporter-cucumber-json: cannot render errors because the error object has an unexpected content`,
+  );
+  // tslint:disable-next-line:no-console
+  console.warn(
+    `testcafe-reporter-cucumber-json: please provide the following log to github.com/hdorgeval/testcafe-reporter-cucumber-json :`,
+  );
+  // tslint:disable-next-line:no-console
+  console.warn(`testcafe-reporter-cucumber-json :`, { err });
+}
+
+function renderNativeError(formatter: () => string): string {
+  let nativeMessage: string;
+  try {
+    nativeMessage = formatter();
+  } catch (error) {
+    nativeMessage = error.message || `${error}`;
+  }
+
+  const formattedErrorMessage = nativeMessage.replace(/>/gi, '&rarr;');
+  return formattedErrorMessage;
+}

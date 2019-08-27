@@ -21,6 +21,7 @@ function ensureCallsiteAndStackFramesAreValid(callsite: CallsiteInterface) {
     );
     // tslint:disable-next-line:no-console
     console.warn(`testcafe-reporter-cucumber-json :`, {
+      callsite,
       stackFrames: callsite.stackFrames,
     });
   }
