@@ -164,7 +164,11 @@ export const extendedReporterPlugin: ExtendedReporterPlugin = {
   },
 };
 
-function reportUnexpectedErrObject(err: unknown) {
+function reportUnexpectedErrObject(err: CallsiteError | unknown) {
+  if (err && (err as CallsiteError).isTestCafeError) {
+    return;
+  }
+
   // tslint:disable-next-line:no-console
   console.warn(
     `testcafe-reporter-cucumber-json: cannot render errors because the error object has an unexpected content`,
