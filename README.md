@@ -1,4 +1,4 @@
-# Cucumber JSON TestCafe Reporter (beta)
+# Cucumber JSON TestCafe Reporter
 
 This is the **Cucumber JSON** reporter plugin for [TestCafe](http://devexpress.github.io/testcafe).
 
