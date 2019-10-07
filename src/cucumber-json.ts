@@ -206,7 +206,7 @@ export class CucumberJsonReport implements CucumberJsonReportInterface {
         error_message: undefined,
         status: stepStatus,
       },
-      text: `<a href="#">${sourceLine || ''}</a>`,
+      text: [`<a href="#">${sourceLine || ''}</a>`],
     };
     if (this.currentFeature) {
       step.match = {

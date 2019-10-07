@@ -48,7 +48,7 @@ export interface Step {
   name: string;
   result: StepResult;
   tags: Tag[];
-  text: string;
+  text: string[];
 }
 export interface Match {
   location: string;
@@ -79,7 +79,7 @@ export const testcafeDefaultStep: Step = {
     status: 'passed',
   },
   tags: [],
-  text: 'text',
+  text: ['text'],
 };
 
 export interface CustomReportData {
