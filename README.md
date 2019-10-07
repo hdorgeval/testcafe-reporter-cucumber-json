@@ -22,9 +22,15 @@ testcafe chrome ./path-to-tests/*(.js|.testcafe|.ts) --reporter cucumber-json:re
 
 ## To generate the HTML report
 
-- install [multiple-cucumber-html-reporter](https://github.com/wswebcreation/multiple-cucumber-html-reporter) (version >= 1.10.0):
+- install [multiple-cucumber-html-reporter](https://github.com/wswebcreation/multiple-cucumber-html-reporter):
 
-  - `npm install --save-dev multiple-cucumber-html-reporter`
+  > if you are using this reporter with version < 4.0.0
+  >
+  > > `npm install --save-dev multiple-cucumber-html-reporter@1.12.0`
+
+  > if you are using this reporter with version >= 4.0.0 (to be released)
+  >
+  > > `npm install --save-dev multiple-cucumber-html-reporter` (>= v1.13.1)
 
 - Create a `report-generator.js` file at the project root:
 
