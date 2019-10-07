@@ -5,6 +5,16 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
+## [4.0.0] - 2019-10-08
+
+### Unreleased
+
+**This version must be used together with multiple-cucumber-html-reporter >= 1.13.1**
+
+- update dependencies
+- fix vulnerabilities
+- fix issue [#13](https://github.com/hdorgeval/testcafe-reporter-cucumber-json/issues/13)
+
 ## [3.0.1] - 2019-08-29
 
 ### Fix
