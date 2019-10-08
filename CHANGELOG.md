@@ -7,7 +7,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [4.0.0] - 2019-10-08
 
-### Unreleased
+### Changed
 
 **This version must be used together with multiple-cucumber-html-reporter >= 1.13.1**
 
