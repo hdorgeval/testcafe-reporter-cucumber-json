@@ -23,3 +23,15 @@ test('It should get Windows platform on Browserstack', () => {
   expect(result.name).toBe('windows');
   expect(result.version).toBe('10.0.0');
 });
+
+test('It should get OSX platform', () => {
+  // Given
+  const userAgent = 'Chrome 80.0.3987.132 / macOS 10.15.3';
+
+  // When
+  const result = getPlatformFrom(userAgent);
+
+  // Then
+  expect(result.name).toBe('osx');
+  expect(result.version).toBe('10.15.3');
+});
