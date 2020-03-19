@@ -94,8 +94,7 @@ export function isMacOsX(platformName: string | undefined): boolean {
   }
   const result =
     platformName.toLowerCase().includes('mac') &&
-    platformName.toLowerCase().includes('os') &&
-    platformName.toLowerCase().includes('x');
+    platformName.toLowerCase().includes('os');
   return result;
 }
 
