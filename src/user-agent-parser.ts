@@ -106,6 +106,22 @@ export function isWindows(platformName: string | undefined): boolean {
   return result;
 }
 
+function isValidVersion(version: string): boolean {
+  if (semver.valid(version) !== null) {
+    return true;
+  }
+
+  if (version.includes('.')) {
+    return true;
+  }
+
+  if (isNaN(Number(version))) {
+    return false;
+  }
+
+  return true;
+}
+
 export function extractNameAndVersion(input: string | undefined | null): NameVersion {
   if (input === undefined || input === null) {
     return {
@@ -115,9 +131,11 @@ export function extractNameAndVersion(input: string | undefined | null): NameVer
   }
   const version =
     input
+      .trim()
       .split(' ')
-      .filter((item) => semver.valid(item) !== null)
+      .filter((item) => isValidVersion(item))
       .pop() || 'unknown';
+
   const name = input.replace(version, '').trim();
   return {
     name,
