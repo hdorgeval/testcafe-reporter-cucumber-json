@@ -5,6 +5,15 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
+## [5.0.0] - 2020-03-25
+
+A major version has been published only because prod dependencies have been updated to their latest version.
+
+### Fix
+
+- Fix user-agent parsing for windows 10 [issue #20](https://github.com/hdorgeval/testcafe-reporter-cucumber-json/issues/20)
+- Update dependencies
+
 ## [4.0.1] - 2020-03-19
 
 ### Fix
