@@ -137,10 +137,7 @@ export class CucumberJsonReport implements CucumberJsonReportInterface {
         platform: this._currentPlatform,
       },
       name: name
-        ? name
-            .replace('Feature:', '')
-            .replace('Feature :', '')
-            .trim()
+        ? name.replace('Feature:', '').replace('Feature :', '').trim()
         : 'undefined',
       runInfo: undefined,
       skipped: false,
@@ -157,10 +154,7 @@ export class CucumberJsonReport implements CucumberJsonReportInterface {
       keyword: 'Scenario',
       line: 0,
       name: name
-        ? name
-            .replace('Scenario:', '')
-            .replace('Scenario :', '')
-            .trim()
+        ? name.replace('Scenario:', '').replace('Scenario :', '').trim()
         : 'undefined',
       skipped: testRunInfo.skipped,
       sourceLine: 'undefined',
