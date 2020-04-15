@@ -36,6 +36,18 @@ test('It should get OSX platform', () => {
   expect(result.version).toBe('10.15.3');
 });
 
+test('It should get Linux platform', () => {
+  // Given
+  const userAgent = 'Chrome 80.0.3987.132 / Linux 0.0';
+
+  // When
+  const result = getPlatformFrom(userAgent);
+
+  // Then
+  expect(result.name).toBe('linux');
+  expect(result.version).toBe('0.0');
+});
+
 test('It should get Windows platform on Windows 10', () => {
   // Given
   const userAgent = 'Chrome 80.0.3987.149 / Windows 10';
