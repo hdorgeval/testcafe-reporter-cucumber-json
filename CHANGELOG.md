@@ -5,6 +5,12 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
+## [5.1.0] - 2020-04-15
+
+### Added
+
+- Linux platform support by [NathanYocum](https://github.com/NathanYocum)
+
 ## [5.0.0] - 2020-03-25
 
 A major version has been published only because prod dependencies have been updated to their latest version.
