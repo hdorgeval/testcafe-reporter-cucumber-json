@@ -51,6 +51,12 @@ export function getPlatformFrom(userAgent: string | undefined): Platform {
       version: platformInfo.version,
     };
   }
+  if (isLinux(platformInfo.name)) {
+    return {
+      name: 'linux',
+      version: platformInfo.version,
+    };
+  }
   if (isWindows(platformInfo.name)) {
     return {
       name: 'windows',
@@ -95,6 +101,14 @@ export function isMacOsX(platformName: string | undefined): boolean {
   const result =
     platformName.toLowerCase().includes('mac') &&
     platformName.toLowerCase().includes('os');
+  return result;
+}
+
+export function isLinux(platformName: string | undefined): boolean {
+  if (platformName === undefined) {
+    return false;
+  }
+  const result = platformName.toLowerCase().includes('linux');
   return result;
 }
 
