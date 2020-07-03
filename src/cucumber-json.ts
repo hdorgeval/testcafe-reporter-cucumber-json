@@ -11,7 +11,7 @@ import {
   Tag,
   testcafeDefaultStep,
 } from './cucumber-json-interfaces';
-import { toBase64DataImageUrl } from './fs';
+import { toBase64DataImageUrl, writeReportSync } from './fs';
 import { TestRunInfo } from './reporter-interface';
 import { distinct, tagsFromDescription } from './tags-parser';
 import { getBrowserFrom, getDeviceFrom, getPlatformFrom } from './user-agent-parser';
@@ -31,6 +31,8 @@ export class CucumberJsonReport implements CucumberJsonReportInterface {
   private _currentApp!: NameVersion;
   private _currentBrowser!: Browser;
   private _currentDevice: string = 'unknown';
+
+  private _storageFolder: string = 'cucumber-json-reports';
 
   public get currentFeature(): FeatureReport | undefined {
     return this._currentFeature;
@@ -83,7 +85,10 @@ export class CucumberJsonReport implements CucumberJsonReportInterface {
     this._currentPlatform = getPlatformFrom(userAgents[0]);
     this._currentDevice = getDeviceFrom(userAgents[0]);
     this._currentBrowser = getBrowserFrom(userAgents[0]);
-    this._currentApp = { name: cliArgs.appName, version: cliArgs.appVersion };
+    this._currentApp = {
+      name: cliArgs.appName,
+      version: cliArgs.appVersion,
+    };
     return this;
   };
 
@@ -111,6 +116,24 @@ export class CucumberJsonReport implements CucumberJsonReportInterface {
       return JSON.stringify(error, null, 2);
     }
   };
+
+  public writeFile = (content: string) => {
+    const browser = this._userAgents[0]
+      .replace(/[\s\.\/\:\\]/g, '_')
+      .replace(/___/g, '_')
+      .replace(/__/g, '_')
+      .trim();
+    const time = this._endTime
+      .toISOString()
+      .replace(/\./g, '-')
+      .replace(/\:/g, '-')
+      .trim();
+
+    const fileName = [browser, '-', time, '.json'].join('');
+    writeReportSync(content, this._storageFolder, fileName);
+    return this;
+  };
+
   public toInfo = () => {
     const result = `
             StartTime : ${this._startTime}

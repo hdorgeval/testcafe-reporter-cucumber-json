@@ -52,7 +52,9 @@ export const extendedReporterPlugin: ExtendedReporterPlugin = {
   ) {
     if (report) {
       const result = report.finalizeWith(endTime, passed, warnings).toJson();
+
       this.write(result);
+      report.writeFile(result);
       return;
     }
     this.write('[]');

@@ -61,6 +61,12 @@ export const writeJsonFileSync = (data: any, ...paths: string[]) => {
   writeFileSync(filePath, json);
 };
 
+export const writeReportSync = (data: string, ...paths: string[]) => {
+  const filePath = join(...paths);
+  ensureDirectoryStructureExists(filePath);
+  writeFileSync(filePath, data);
+};
+
 export const readAllLines = (filePath: string): string[] => {
   const lines = readFileSync(filePath, 'utf8').split('\n');
   return lines;
