@@ -38,7 +38,7 @@ export class CucumberJsonReport implements CucumberJsonReportInterface {
   private _currentBrowser!: Browser;
   private _currentDevice: string = 'unknown';
 
-  private _storageFolder: string = 'cucumber-json-reports';
+  private _storageFolder: string = cliArgs.reportFolder || 'cucumber-json-reports';
 
   public get currentFeature(): FeatureReport | undefined {
     return this._currentFeature;

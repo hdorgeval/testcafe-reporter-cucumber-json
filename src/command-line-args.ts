@@ -5,6 +5,7 @@ export const cliArgs = {
   ...args,
   appName: args['reporter-app-name'],
   appVersion: args['reporter-app-version'],
+  reportFolder: args['reporter-json-folder'],
   rawCommandLine: process.argv.join(' '),
 } as CliArgs;
 
@@ -32,5 +33,6 @@ if (cliArgs.appVersion === undefined) {
 export interface CliArgs extends ParsedArgs {
   appName: string;
   appVersion: string;
+  reportFolder: string;
   rawCommandLine: string;
 }
