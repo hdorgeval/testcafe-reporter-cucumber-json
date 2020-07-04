@@ -10,8 +10,14 @@ import {
   StepStatus,
   Tag,
   testcafeDefaultStep,
+  Metadata,
 } from './cucumber-json-interfaces';
-import { toBase64DataImageUrl, writeReportSync } from './fs';
+import {
+  toBase64DataImageUrl,
+  writeReportSync,
+  userAgentToFilename,
+  dateToFilename,
+} from './fs';
 import { TestRunInfo } from './reporter-interface';
 import { distinct, tagsFromDescription } from './tags-parser';
 import { getBrowserFrom, getDeviceFrom, getPlatformFrom } from './user-agent-parser';
@@ -117,21 +123,21 @@ export class CucumberJsonReport implements CucumberJsonReportInterface {
     }
   };
 
-  public writeFile = (content: string) => {
-    const browser = this._userAgents[0]
-      .replace(/[\s\.\/\:\\]/g, '_')
-      .replace(/___/g, '_')
-      .replace(/__/g, '_')
-      .trim();
-    const time = this._endTime
-      .toISOString()
-      .replace(/\./g, '-')
-      .replace(/\:/g, '-')
-      .trim();
+  public writeFile = () => {
+    this._userAgents.map((userAgent) => {
+      this._features.forEach((feature) => {
+        const metadata = feature.metadata as Metadata;
+        metadata.browser = getBrowserFrom(userAgent);
+        metadata.device = getDeviceFrom(userAgent);
+        metadata.platform = getPlatformFrom(userAgent);
+      });
 
-    const fileName = [browser, '-', time, '.json'].join('');
-    writeReportSync(content, this._storageFolder, fileName);
-    return this;
+      const browser = userAgentToFilename(userAgent);
+      const time = dateToFilename(this._endTime);
+      const fileName = [browser, '-', time, '.json'].join('');
+
+      writeReportSync(this.toJson(), this._storageFolder, fileName);
+    });
   };
 
   public toInfo = () => {

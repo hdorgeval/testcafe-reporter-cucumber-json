@@ -130,3 +130,17 @@ export const toBase64DataImageUrl = (path: string) => {
   const dataUrl = `data:image/${imageType};base64,${base64Data}`;
   return dataUrl;
 };
+
+export const userAgentToFilename = (userAgent: string): string => {
+  const filename = userAgent
+    .replace(/[\s\.\/\:\\]/g, '_')
+    .replace(/___/g, '_')
+    .replace(/__/g, '_')
+    .trim();
+  return filename;
+};
+
+export const dateToFilename = (date: Date): string => {
+  const filename = date.toISOString().replace(/\./g, '-').replace(/\:/g, '-').trim();
+  return filename;
+};

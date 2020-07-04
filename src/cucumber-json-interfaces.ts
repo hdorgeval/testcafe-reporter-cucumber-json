@@ -97,7 +97,7 @@ export interface CucumberJsonReportInterface {
   toJson: () => string;
   withError: (error: string | undefined) => this;
   withScreenshots: (path: string[] | undefined) => this;
-  writeFile: (content: string) => void;
+  writeFile: () => void;
 }
 
 export interface Metadata {

@@ -51,13 +51,10 @@ export const extendedReporterPlugin: ExtendedReporterPlugin = {
     report: CucumberJsonReportInterface,
   ) {
     if (report) {
-      const result = report.finalizeWith(endTime, passed, warnings).toJson();
-
-      this.write(result);
-      report.writeFile(result);
+      report.finalizeWith(endTime, passed, warnings);
+      report.writeFile();
       return;
     }
-    this.write('[]');
   },
   chalk: chalk.default,
   formatError: (err: any, prefix: string) => {
