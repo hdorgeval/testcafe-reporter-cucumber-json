@@ -4,7 +4,7 @@ This is the **Cucumber JSON** reporter plugin for [TestCafe](http://devexpress.g
 
 [![npm badge](https://nodei.co/npm/testcafe-reporter-cucumber-json.png)](https://npmjs.org/package/testcafe-reporter-cucumber-json)
 
-This TestCafe reporter generates a json file that can be converted to a nice and searchable html report by using [multiple-cucumber-html-reporter](https://github.com/wswebcreation/multiple-cucumber-html-reporter).
+This TestCafe reporter generates JSON files that can be merged and converted to a nice and searchable html report by using [multiple-cucumber-html-reporter](https://github.com/wswebcreation/multiple-cucumber-html-reporter).
 
 ![report-sample](media/report01.png)
 
@@ -17,20 +17,22 @@ This TestCafe reporter generates a json file that can be converted to a nice and
 - add to the testcafe command-line the following options:
 
 ```sh
-testcafe chrome ./path-to-tests/*(.js|.testcafe|.ts) --reporter cucumber-json:reports/report.json --reporter-app-name='My App' --reporter-app-version='x.y.z'
+testcafe chrome ./path-to-tests/*(.js|.testcafe|.ts) --reporter cucumber-json --reporter-app-name='My App' --reporter-app-version='x.y.z'
+```
+
+JSON files are now automatically created in a folder named `cucumber-json-reports` at the root of your project.
+
+If you need to change this folder, add this option on the TestCafé command-line:
+
+```sh
+--reporter-json-folder='my-custom-folder'
 ```
 
 ## To generate the HTML report
 
 - install [multiple-cucumber-html-reporter](https://github.com/wswebcreation/multiple-cucumber-html-reporter):
 
-  > if you are using this reporter with version < 4.0.0
-  >
-  > > `npm install --save-dev multiple-cucumber-html-reporter@1.12.0`
-
-  > if you are using this reporter with version >= 4.0.0
-  >
-  > > `npm install --save-dev multiple-cucumber-html-reporter` (>= v1.13.1)
+`npm install --save-dev multiple-cucumber-html-reporter` (>= v1.13.1)
 
 - Create a `report-generator.js` file at the project root:
 
@@ -42,8 +44,8 @@ const projectVersion = process.env.npm_package_version;
 const reportGenerationTime = new Date().toISOString();
 report.generate({
   reportName: 'TestCafe Report',
-  jsonDir: 'reports',
-  reportPath: 'reports',
+  jsonDir: 'cucumber-json-reports',
+  reportPath: 'cucumber-json-reports/html',
   openReportInBrowser: true,
   disableLog: true,
   displayDuration: true,
