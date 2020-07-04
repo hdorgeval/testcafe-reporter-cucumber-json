@@ -5,6 +5,62 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
+## [6.0.0] - 2020-07-05
+
+### BREAKING CHANGES
+
+- Declaration of this reporter, on the TestCafe CLI has changed:
+
+```sh
+testcafe chrome ./path-to-tests/*(.js|.testcafe|.ts) --reporter cucumber-json --reporter-app-name='My App' --reporter-app-version='x.y.z'
+```
+
+or if you use the `runner.reporter`
+
+```js
+runner.reporter('cucumber-json');
+```
+
+> You do not need to specify a filename in the reporter declaration, because the reporter now creates itself all json files.
+>
+> JSON files are now automatically created in a folder named `cucumber-json-reports` at the root of your project.
+>
+> JSON files are created for each browser and for each test execution, for example:
+
+```sh
+  cucumber-json-reports
+  |- Chrome_83_0_4103_116_macOS_10_15_5-2020-07-04T19-44-58-493Z.json
+  |- Firefox_78_0_macOS_10_15-2020-07-04T19-44-58-493Z.json
+  |- Microsoft_Edge_83_0_478_58_macOS_10_15_5-2020-07-04T19-38-05-688Z.json
+  |- Microsoft_Edge_83_0_478_58_macOS_10_15_5-2020-07-04T19-44-58-493Z.json
+  |- Safari_13_1_1_macOS_10_15_5-2020-07-04T19-44-58-493Z.json
+  |- ...
+```
+
+> If you need to change this folder, add this option on the TestCafé command-line:
+
+```sh
+--reporter-json-folder='my-custom-folder'
+```
+
+> You should update the `report-generator.ts` file:
+
+```js
+report.generate({
+  jsonDir: 'cucumber-json-reports',
+  reportPath: 'cucumber-json-reports/html',
+});
+```
+
+### Added
+
+- [be able to have a json report file per browser and per execution](https://github.com/hdorgeval/testcafe-reporter-cucumber-json/issues/7)
+
+### Fixed
+
+- Fix user-agent parsing for Edge
+- Update dependencies
+
 ## [5.1.0] - 2020-04-15
 
 ### Added
