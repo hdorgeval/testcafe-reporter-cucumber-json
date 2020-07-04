@@ -1,5 +1,5 @@
-import * as semver from 'semver';
 import { Browser, BrowserName, NameVersion, Platform } from './cucumber-json-interfaces';
+import * as semver from 'semver';
 
 const unknownPlatform: Platform = {
   name: 'unknown',
@@ -23,10 +23,10 @@ export function getPlatformFrom(userAgent: string | undefined): Platform {
       ...unknownPlatform,
     };
   }
-  const sanitizedUserAgent = userAgent.replace(/\(https\:.*\)/gi, '');
+  const sanitizedUserAgent = userAgent.replace(/\(https:.*\)/gi, '');
   const parts = sanitizedUserAgent.split('/');
   if (parts.length <= 1) {
-    // tslint:disable-next-line:no-console
+    // eslint-disable-next-line no-console
     console.warn(
       `testcafe-reporter-cucumber-json: cannot get the Platform name from input string '${userAgent}'`,
     );
@@ -36,7 +36,7 @@ export function getPlatformFrom(userAgent: string | undefined): Platform {
   }
   const rawPlatorm = parts.pop();
   if (rawPlatorm === undefined) {
-    // tslint:disable-next-line:no-console
+    // eslint-disable-next-line no-console
     console.warn(
       `testcafe-reporter-cucumber-json: cannot get the Platform name from input string '${userAgent}'`,
     );
@@ -63,7 +63,7 @@ export function getPlatformFrom(userAgent: string | undefined): Platform {
       version: platformInfo.version,
     };
   }
-  // tslint:disable-next-line:no-console
+  // eslint-disable-next-line no-console
   console.warn(
     `testcafe-reporter-cucumber-json: cannot get the Platform name from input string '${userAgent}'`,
   );
@@ -172,7 +172,7 @@ export function getBrowserFrom(userAgent: string | undefined): Browser {
 
   const parts = userAgent.split('/');
   if (parts.length === 0) {
-    // tslint:disable-next-line:no-console
+    // eslint-disable-next-line no-console
     console.warn(
       `testcafe-reporter-cucumber-json: cannot get the Browser name from input string '${userAgent}'`,
     );
@@ -182,7 +182,7 @@ export function getBrowserFrom(userAgent: string | undefined): Browser {
   }
   const rawBrowser = parts[0];
   if (rawBrowser === undefined) {
-    // tslint:disable-next-line:no-console
+    // eslint-disable-next-line no-console
     console.warn(
       `testcafe-reporter-cucumber-json: cannot get the Browser name from input string '${userAgent}'`,
     );

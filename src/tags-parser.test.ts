@@ -1,7 +1,7 @@
+import { tagsFromDescription } from './tags-parser';
 import { unlinkSync } from 'fs';
 import 'jest';
 import { join } from 'path';
-import { tagsFromDescription } from './tags-parser';
 
 afterAll(() => {
   unlinkSync(join(process.cwd(), 'testcafe-reporter-cucumber-json.json'));

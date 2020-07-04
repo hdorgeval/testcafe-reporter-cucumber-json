@@ -1,7 +1,7 @@
 import { CucumberJsonReport } from './cucumber-json';
 import { extendedReporterPlugin } from './reporter';
+import { CallsiteError, TestRunInfo } from './reporter-interface';
 
-// tslint:disable-next-line:no-string-literal
 exports['default'] = () => {
   const report = new CucumberJsonReport();
   return {
@@ -20,10 +20,10 @@ exports['default'] = () => {
         report,
       );
     },
-    reportTestDone(name: string, testRunInfo: any) {
+    reportTestDone(name: string, testRunInfo: TestRunInfo) {
       extendedReporterPlugin.reportTestDone.call(this, name, testRunInfo, report);
     },
-    renderErrors(errs: any[]) {
+    renderErrors(errs: CallsiteError[]) {
       return extendedReporterPlugin.renderErrors.call(this, errs);
     },
     createErrorDecorator() {
@@ -32,5 +32,4 @@ exports['default'] = () => {
   };
 };
 
-// tslint:disable-next-line:no-string-literal
 module.exports = exports['default'];

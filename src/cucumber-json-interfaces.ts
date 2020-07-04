@@ -1,3 +1,5 @@
+import { TestRunInfo } from './reporter-interface';
+
 export interface FeatureReport {
   description: string;
   elements: Scenario[];
@@ -87,16 +89,24 @@ export interface CustomReportData {
   title: string;
 }
 export interface CucumberJsonReportInterface {
-  createFeature: (name: string, path: string) => this;
-  createScenario: (name: string, testRunInfo: any) => this;
+  createFeature: (name: string, path: string) => CucumberJsonReportInterface;
+  createScenario: (name: string, testRunInfo: TestRunInfo) => CucumberJsonReportInterface;
   currentFeature: FeatureReport | undefined;
   currentScenario: Scenario | undefined;
   currentStep: Step | undefined;
-  finalizeWith: (endTime: Date, passed: number, warnings: string[]) => this;
-  initializeWith: (startTime: Date, userAgents: string[], testCount: number) => this;
+  finalizeWith: (
+    endTime: Date,
+    passed: number,
+    warnings: string[],
+  ) => CucumberJsonReportInterface;
+  initializeWith: (
+    startTime: Date,
+    userAgents: string[],
+    testCount: number,
+  ) => CucumberJsonReportInterface;
   toJson: () => string;
-  withError: (error: string | undefined) => this;
-  withScreenshots: (path: string[] | undefined) => this;
+  withError: (error: string | undefined) => CucumberJsonReportInterface;
+  withScreenshots: (path: string[] | undefined) => CucumberJsonReportInterface;
   writeFile: () => void;
 }
 

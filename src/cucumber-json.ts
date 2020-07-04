@@ -22,11 +22,10 @@ import { TestRunInfo } from './reporter-interface';
 import { distinct, tagsFromDescription } from './tags-parser';
 import { getBrowserFrom, getDeviceFrom, getPlatformFrom } from './user-agent-parser';
 export class CucumberJsonReport implements CucumberJsonReportInterface {
-  // tslint:disable:variable-name
   private _startTime: Date = new Date();
   private _endTime: Date = new Date();
   private _userAgents: string[] = [];
-  private _testCount: number = 0;
+  private _testCount = 0;
   private _passed!: number;
   private _warnings!: string[];
   private _features: FeatureReport[] = [];
@@ -36,7 +35,7 @@ export class CucumberJsonReport implements CucumberJsonReportInterface {
   private _currentPlatform!: Platform;
   private _currentApp!: NameVersion;
   private _currentBrowser!: Browser;
-  private _currentDevice: string = 'unknown';
+  private _currentDevice = 'unknown';
 
   private _storageFolder: string = cliArgs.reportFolder || 'cucumber-json-reports';
 
@@ -80,7 +79,11 @@ export class CucumberJsonReport implements CucumberJsonReportInterface {
     }
   }
 
-  public initializeWith = (startTime: Date, userAgents: string[], testCount: number) => {
+  public initializeWith = (
+    startTime: Date,
+    userAgents: string[],
+    testCount: number,
+  ): CucumberJsonReport => {
     this._startTime = startTime;
     this._userAgents = userAgents;
     this._testCount = testCount;
@@ -98,7 +101,11 @@ export class CucumberJsonReport implements CucumberJsonReportInterface {
     return this;
   };
 
-  public finalizeWith = (endTime: Date, passed: number, warnings: string[]) => {
+  public finalizeWith = (
+    endTime: Date,
+    passed: number,
+    warnings: string[],
+  ): CucumberJsonReport => {
     this._endTime = endTime;
     this._passed = passed;
     this._warnings = warnings;
@@ -114,7 +121,7 @@ export class CucumberJsonReport implements CucumberJsonReportInterface {
     }
     return this;
   };
-  public toJson = () => {
+  public toJson = (): string => {
     try {
       const json = JSON.stringify(this._features, null, 2);
       return json;
@@ -123,7 +130,7 @@ export class CucumberJsonReport implements CucumberJsonReportInterface {
     }
   };
 
-  public writeFile = () => {
+  public writeFile = (): void => {
     this._userAgents.map((userAgent) => {
       this._features.forEach((feature) => {
         const metadata = feature.metadata as Metadata;
@@ -140,7 +147,7 @@ export class CucumberJsonReport implements CucumberJsonReportInterface {
     });
   };
 
-  public toInfo = () => {
+  public toInfo = (): string => {
     const result = `
             StartTime : ${this._startTime}
             EndTime   : ${this._endTime}
@@ -151,7 +158,7 @@ export class CucumberJsonReport implements CucumberJsonReportInterface {
         `;
     return result;
   };
-  public createFeature = (name: string, path: string) => {
+  public createFeature = (name: string, path: string): CucumberJsonReportInterface => {
     const index = 0;
     const featureReport: FeatureReport = {
       description: name || '',
@@ -177,7 +184,10 @@ export class CucumberJsonReport implements CucumberJsonReportInterface {
     this.currentFeature = featureReport;
     return this;
   };
-  public createScenario = (name: string, testRunInfo: TestRunInfo) => {
+  public createScenario = (
+    name: string,
+    testRunInfo: TestRunInfo,
+  ): CucumberJsonReportInterface => {
     const scenarioId = this.getScenarioIdFrom(name);
     const scenario: Scenario = {
       id: `Scenario${scenarioId}`,
@@ -200,13 +210,13 @@ export class CucumberJsonReport implements CucumberJsonReportInterface {
     this.addTagsToCurrentFeature(tagsFromDescription(name));
     return this;
   };
-  public withError = (error: string | undefined) => {
+  public withError = (error: string | undefined): CucumberJsonReportInterface => {
     if (this.currentStep && error) {
       this.currentStep.result.error_message = error;
     }
     return this;
   };
-  public withScreenshots = (paths: string[] | undefined) => {
+  public withScreenshots = (paths: string[] | undefined): CucumberJsonReportInterface => {
     if (Array.isArray(paths) && paths.length > 0 && this.currentStep) {
       this.currentStep.image = paths.map(toBase64DataImageUrl);
     }
@@ -220,7 +230,7 @@ export class CucumberJsonReport implements CucumberJsonReportInterface {
     }
 
     const sourceLine = name;
-    const sourceLineIndex: number = 0;
+    const sourceLineIndex = 0;
 
     const step: Step = {
       ...testcafeDefaultStep,

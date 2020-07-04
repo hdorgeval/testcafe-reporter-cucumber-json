@@ -1,8 +1,8 @@
 import { ReporterlPluginHost } from './reporter-interface';
 
-// tslint:disable:no-var-requires
+// eslint-disable-next-line @typescript-eslint/no-var-requires
 const ReporterPluginHost = require('testcafe/lib/reporter/plugin-host');
-const outStream: string = '';
+const outStream = '';
 const plugin: ReporterlPluginHost = new ReporterPluginHost({}, outStream);
 
 export const nativeWrite = plugin.write;

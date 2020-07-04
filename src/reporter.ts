@@ -1,4 +1,3 @@
-import * as chalk from 'chalk';
 import { CucumberJsonReportInterface } from './cucumber-json-interfaces';
 import {
   nativeFormatError,
@@ -9,6 +8,7 @@ import {
 import { CallsiteError, ExtendedReporterPlugin, TestRunInfo } from './reporter-interface';
 import { filterStackFramesIn, getAllFilesIn, stackFramesOf } from './stack-frames-parser';
 import { getStackTraceHeaderFrom } from './stack-trace-parser';
+import * as chalk from 'chalk';
 
 export const extendedReporterPlugin: ExtendedReporterPlugin = {
   reportTaskStart(
@@ -57,7 +57,7 @@ export const extendedReporterPlugin: ExtendedReporterPlugin = {
     }
   },
   chalk: chalk.default,
-  formatError: (err: any, prefix: string) => {
+  formatError: (err: CallsiteError, prefix: string) => {
     return nativeFormatError(err, prefix);
   },
   newline: () => {
@@ -121,7 +121,7 @@ export const extendedReporterPlugin: ExtendedReporterPlugin = {
     return lines.join('\n');
   },
   createErrorDecorator() {
-    let hasShownError: boolean = false;
+    let hasShownError = false;
     const lineSeparator = '--------------------------------------------\n';
     return {
       a: (str: string) => `"${this.chalk.underline(str)}"`,
@@ -168,15 +168,15 @@ function reportUnexpectedErrObject(err: CallsiteError | unknown) {
     return;
   }
 
-  // tslint:disable-next-line:no-console
+  // eslint-disable-next-line no-console
   console.warn(
     `testcafe-reporter-cucumber-json: cannot render errors because the error object has an unexpected content`,
   );
-  // tslint:disable-next-line:no-console
+  // eslint-disable-next-line no-console
   console.warn(
     `testcafe-reporter-cucumber-json: please provide the following log to github.com/hdorgeval/testcafe-reporter-cucumber-json :`,
   );
-  // tslint:disable-next-line:no-console
+  // eslint-disable-next-line no-console
   console.warn(`testcafe-reporter-cucumber-json :`, { err });
 }
 

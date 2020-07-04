@@ -1,6 +1,6 @@
 import { CallsiteInterface, StackFrame } from './reporter-interface';
 
-export const filterStackFramesIn = (callsite: CallsiteInterface) => {
+export const filterStackFramesIn = (callsite: CallsiteInterface): void => {
   if (callsite) {
     ensureCallsiteAndStackFramesAreValid(callsite);
     const filteredStackFrames = getCurrentAppStackFramesFrom(callsite);
@@ -11,15 +11,15 @@ export const filterStackFramesIn = (callsite: CallsiteInterface) => {
 
 function ensureCallsiteAndStackFramesAreValid(callsite: CallsiteInterface) {
   if (!Array.isArray(callsite.stackFrames)) {
-    // tslint:disable-next-line:no-console
+    // eslint-disable-next-line no-console
     console.warn(
       `testcafe-reporter-cucumber-json: cannot render errors because the callsite object has unexpected content`,
     );
-    // tslint:disable-next-line:no-console
+    // eslint-disable-next-line no-console
     console.warn(
       `testcafe-reporter-cucumber-json: please provide the following log to github.com/hdorgeval/testcafe-reporter-cucumber-json :`,
     );
-    // tslint:disable-next-line:no-console
+    // eslint-disable-next-line no-console
     console.warn(`testcafe-reporter-cucumber-json :`, {
       callsite,
       stackFrames: callsite.stackFrames,
@@ -65,7 +65,7 @@ export const isNodeModuleOrIsNullOrUndefined = (
   return false;
 };
 export const getAllFilesIn = (callsite: CallsiteInterface): string[] => {
-  let currentFile: string = 'undefined';
+  let currentFile = 'undefined';
   const result = callsite.stackFrames
     .map((stackFrame: StackFrame) => stackFrame.getFileName())
     .filter((filepath: string | undefined | null) => {
@@ -80,6 +80,8 @@ export const getAllFilesIn = (callsite: CallsiteInterface): string[] => {
     });
   return result;
 };
+
+// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
 export const stackFramesOf = (filename: string) => {
   return {
     in: (stackFrames: StackFrame[]): StackFrame[] => {

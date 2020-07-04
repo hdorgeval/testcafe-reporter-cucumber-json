@@ -7,7 +7,7 @@ export const tagsFromDescription = (description: string): Tag[] => {
   }
 
   const words = description
-    .split(/\s|\n|\r|\.|\:|!|,|;/)
+    .split(/\s|\n|\r|\.|:|!|,|;/)
     .map((w) => w.trim())
     .filter((w) => w.length > 2)
     .map((w) => w.toLocaleLowerCase())

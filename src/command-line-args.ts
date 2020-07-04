@@ -10,22 +10,22 @@ export const cliArgs = {
 } as CliArgs;
 
 if (cliArgs.appName === undefined) {
-  // tslint:disable-next-line:no-console
+  // eslint-disable-next-line no-console
   console.warn(
     `testcafe-reporter-cucumber-json: cannot get the App name from the command-line`,
   );
-  // tslint:disable-next-line:no-console
+  // eslint-disable-next-line no-console
   console.warn(
     `testcafe-reporter-cucumber-json: add the option --reporter-app-name='My App'`,
   );
 }
 
 if (cliArgs.appVersion === undefined) {
-  // tslint:disable-next-line:no-console
+  // eslint-disable-next-line no-console
   console.warn(
     `testcafe-reporter-cucumber-json: cannot get the App version from the command-line`,
   );
-  // tslint:disable-next-line:no-console
+  // eslint-disable-next-line no-console
   console.warn(
     `testcafe-reporter-cucumber-json: add the option --reporter-app-version='x.y.z'`,
   );

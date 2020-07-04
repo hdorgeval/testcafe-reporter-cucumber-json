@@ -1,13 +1,13 @@
+import { CucumberJsonReportInterface } from './cucumber-json-interfaces';
 import { CallsiteRecord } from 'callsite-record';
 import { Chalk } from 'chalk';
-import { CucumberJsonReportInterface } from './cucumber-json-interfaces';
 export interface Reporter {
   reportTaskStart: (startTime: Date, userAgents: string[], testCount: number) => void;
   reportFixtureStart: (name: string, path: string) => void;
   reportTestDone: (name: string, testRunInfo: TestRunInfo) => void;
   reportTaskDone: (endTime: Date, passed: number, warnings: string[]) => void;
-  renderErrors: (errs: any[]) => string;
-  createErrorDecorator: () => any;
+  renderErrors: (errs: CallsiteError[]) => string;
+  createErrorDecorator: () => unknown;
 }
 
 export interface ExtendedReporter {
@@ -39,7 +39,7 @@ export interface ReporterPlugin extends Reporter, ReporterlPluginHost {}
 
 export interface ExtendedReporterPlugin extends ExtendedReporter, ReporterlPluginHost {
   renderErrors: (errs: CallsiteError[]) => string;
-  createErrorDecorator: () => any;
+  createErrorDecorator: () => unknown;
 }
 
 export interface TestRunInfo {
@@ -146,5 +146,5 @@ export interface ReporterlPluginHost {
   setIndent: (val: number) => ReporterlPluginHost;
   newline: () => ReporterlPluginHost;
   chalk: Chalk;
-  formatError: (err: any, prefix: string) => string;
+  formatError: (err: CallsiteError, prefix: string) => string;
 }

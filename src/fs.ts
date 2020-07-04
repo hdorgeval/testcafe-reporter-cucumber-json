@@ -54,14 +54,14 @@ export const getFilesRecursivelyIn = (
   return files;
 };
 
-export const writeJsonFileSync = (data: any, ...paths: string[]) => {
+export const writeJsonFileSync = (data: unknown, ...paths: string[]): void => {
   const json = JSON.stringify(data, null, 2);
   const filePath = join(...paths);
   ensureDirectoryStructureExists(filePath);
   writeFileSync(filePath, json);
 };
 
-export const writeReportSync = (data: string, ...paths: string[]) => {
+export const writeReportSync = (data: string, ...paths: string[]): void => {
   const filePath = join(...paths);
   ensureDirectoryStructureExists(filePath);
   writeFileSync(filePath, data);
@@ -72,7 +72,7 @@ export const readAllLines = (filePath: string): string[] => {
   return lines;
 };
 
-export const getParentDirs = (filePath: string) => {
+export const getParentDirs = (filePath: string): string[] => {
   const paths = filePath.split(sep).filter((dir) => dir !== '.');
 
   const dirs = paths.splice(0, paths.length - 1);
@@ -86,7 +86,7 @@ export const getFilename = (filePath: string): string | undefined => {
 
 const ensureDirectoryStructureExists = (filePath: string) => {
   const dirs = getParentDirs(filePath);
-  let partialPath: string = '.';
+  let partialPath = '.';
   dirs.map((dir) => {
     partialPath = [partialPath, dir].join(sep);
     ensureDirectoryExists(partialPath);
@@ -100,7 +100,7 @@ const ensureDirectoryExists = (directoryPath: string) => {
   mkdirSync(directoryPath);
 };
 
-export const jsonFrom = (filePath: string): any => {
+export const jsonFrom = (filePath: string): unknown => {
   if (!isFile(filePath)) {
     return {};
   }
@@ -124,7 +124,7 @@ export const fileExtension = (filePath: string): string => {
   return extension.startsWith('.') ? extension.replace('.', '') : extension;
 };
 
-export const toBase64DataImageUrl = (path: string) => {
+export const toBase64DataImageUrl = (path: string): string => {
   const imageType = fileExtension(path);
   const base64Data = readFileSync(path).toString('base64');
   const dataUrl = `data:image/${imageType};base64,${base64Data}`;
@@ -133,7 +133,7 @@ export const toBase64DataImageUrl = (path: string) => {
 
 export const userAgentToFilename = (userAgent: string): string => {
   const filename = userAgent
-    .replace(/[\s\.\/\:\\]/g, '_')
+    .replace(/[\s./:\\]/g, '_')
     .replace(/___/g, '_')
     .replace(/__/g, '_')
     .trim();
@@ -141,6 +141,6 @@ export const userAgentToFilename = (userAgent: string): string => {
 };
 
 export const dateToFilename = (date: Date): string => {
-  const filename = date.toISOString().replace(/\./g, '-').replace(/\:/g, '-').trim();
+  const filename = date.toISOString().replace(/\./g, '-').replace(/:/g, '-').trim();
   return filename;
 };
