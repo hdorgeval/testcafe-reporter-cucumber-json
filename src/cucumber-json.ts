@@ -164,6 +164,7 @@ export class CucumberJsonReport implements CucumberJsonReportInterface {
         browser: this._currentBrowser,
         device: this._currentDevice,
         platform: this._currentPlatform,
+        date: new Date(),
       },
       name: name
         ? name.replace('Feature:', '').replace('Feature :', '').trim()

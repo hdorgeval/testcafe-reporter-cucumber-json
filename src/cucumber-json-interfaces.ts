@@ -103,6 +103,7 @@ export interface CucumberJsonReportInterface {
 export interface Metadata {
   app: NameVersion;
   browser: Browser;
+  date: Date;
   device: string;
   platform: Platform;
 }
