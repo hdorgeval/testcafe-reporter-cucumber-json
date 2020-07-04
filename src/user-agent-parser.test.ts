@@ -71,3 +71,15 @@ test('It should get browser from Chrome 80.0.3987.149', () => {
   expect(result.name).toBe('chrome');
   expect(result.version).toBe('80.0.3987.149');
 });
+
+test('It should get browser from Microsoft Edge 83.0.478.58 / macOS 10.15.5', () => {
+  // Given
+  const userAgent = 'Microsoft Edge 83.0.478.58 / macOS 10.15.5';
+
+  // When
+  const result = getBrowserFrom(userAgent);
+
+  // Then
+  expect(result.name).toBe('edge');
+  expect(result.version).toBe('83.0.478.58');
+});

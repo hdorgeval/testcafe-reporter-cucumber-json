@@ -202,6 +202,7 @@ export function getBrowserFrom(userAgent: string | undefined): Browser {
 }
 
 export const browserNameMapping: { [index: string]: BrowserName } = {
+  'Microsoft Edge': 'edge',
   Chrome: 'chrome',
   Edge: 'edge',
   Firefox: 'firefox',
