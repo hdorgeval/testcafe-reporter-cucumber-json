@@ -1,16 +1,44 @@
 {
+    "editor.tabSize": 2,
+    "editor.useTabStops": true,
     "files.exclude": {
-        "**/.git": true,
-        "**/.svn": true,
-        "**/.hg": true,
-        "**/CVS": true,
-        "**/.DS_Store": true,
-        "node_modules": true
+      "**/.git": true,
+      "**/.svn": true,
+      "**/.hg": true,
+      "**/CVS": true,
+      "**/.DS_Store": true,
+      "**/build": true,
+      "node_modules": true
     },
+    "editor.tabCompletion": "on",
+    "editor.formatOnPaste": true,
+    "editor.formatOnSave": true,
+    "editor.minimap.enabled": true,
+    "editor.minimap.showSlider": "always",
+    "editor.minimap.renderCharacters": true,
+    "editor.mouseWheelZoom": true,
+    "search.exclude": {
+      "**/node_modules": true,
+      "**/bower_components": true
+    },
+    "javascript.referencesCodeLens.enabled": true,
+    "javascript.suggest.completeFunctionCalls": true,
     "typescript.referencesCodeLens.enabled": true,
     "typescript.implementationsCodeLens.enabled": true,
-    "editor.tabCompletion": "on",
-    "editor.minimap.enabled": true,
-    "editor.mouseWheelZoom": true,
-    "editor.formatOnSave": true
-}
+    "typescript.suggest.completeFunctionCalls": true,
+    "typescript.tsdk": "./node_modules/typescript/lib",
+    "prettier.singleQuote": true,
+    "prettier.trailingComma": "all",
+    "eslint.alwaysShowStatus": true,
+    "eslint.options": {
+      "extensions": [".js", ".ts", ".tsx"]
+    },
+    "eslint.validate": [
+      "javascript",
+      "typescript"
+    ],
+    "editor.codeActionsOnSave": {
+      "source.fixAll.eslint": true
+    }
+  }
+  
