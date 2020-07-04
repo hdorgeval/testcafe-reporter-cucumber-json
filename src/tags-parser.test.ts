@@ -1,6 +1,5 @@
 import { tagsFromDescription } from './tags-parser';
 import { unlinkSync } from 'fs';
-import 'jest';
 import { join } from 'path';
 
 afterAll(() => {
