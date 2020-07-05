@@ -10,17 +10,21 @@ This TestCafe reporter generates JSON files that can be merged and converted to 
 
 ## To install this TestCafe Reporter
 
-- run the command `npm install --save testcafe-reporter-cucumber-json`.
+- run the command:
+
+  ```sh
+  npm install --save testcafe-reporter-cucumber-json
+  ```
 
 ## Usage
 
 - add to the testcafe command-line the following options:
 
-```sh
-testcafe chrome ./path-to-tests/*(.js|.testcafe|.ts) --reporter cucumber-json --reporter-app-name='My App' --reporter-app-version='x.y.z'
-```
+  ```sh
+  testcafe chrome ./path-to-tests/*(.js|.testcafe|.ts) --reporter cucumber-json --reporter-app-name='My App'  --reporter-app-version='x.y.z'
+  ```
 
-JSON files are now automatically created in a folder named `cucumber-json-reports` at the root of your project.
+JSON files will be automatically created in a folder named `cucumber-json-reports` at the root of your project.
 
 If you need to change this folder, add this option on the TestCafé command-line:
 
@@ -28,44 +32,62 @@ If you need to change this folder, add this option on the TestCafé command-line
 --reporter-json-folder='my-custom-folder'
 ```
 
+At each TestCafe run, this reporter will create a separate JSON file for each browser started by TestCafe.
+
+Each JSON file will be named : `[browser name][browser platform][date and time of execution].json`.
+
+Examples:
+
+```sh
+  cucumber-json-reports
+  |- Chrome_83_0_4103_116_macOS_10_15_5-2020-07-04T19-44-58-493Z.json
+  |- Firefox_78_0_macOS_10_15-2020-07-04T19-44-58-493Z.json
+  |- Microsoft_Edge_83_0_478_58_macOS_10_15_5-2020-07-04T19-38-05-688Z.json
+  |- Microsoft_Edge_83_0_478_58_macOS_10_15_5-2020-07-04T19-44-58-493Z.json
+  |- Safari_13_1_1_macOS_10_15_5-2020-07-04T19-44-58-493Z.json
+  |- ...
+```
+
 ## To generate the HTML report
+
+The HTML report will merge all the JSON files inside folder `cucumber-json-reports` into a single HTML file.
 
 - install [multiple-cucumber-html-reporter](https://github.com/wswebcreation/multiple-cucumber-html-reporter):
 
-`npm install --save-dev multiple-cucumber-html-reporter` (>= v1.13.1)
+  `npm install --save-dev multiple-cucumber-html-reporter` (>= v1.13.1)
 
 - Create a `report-generator.js` file at the project root:
 
-```javascript
-const report = require('multiple-cucumber-html-reporter');
-const path = require('path');
-const projectName = path.basename(__dirname);
-const projectVersion = process.env.npm_package_version;
-const reportGenerationTime = new Date().toISOString();
-report.generate({
-  reportName: 'TestCafe Report',
-  jsonDir: 'cucumber-json-reports',
-  reportPath: 'cucumber-json-reports/html',
-  openReportInBrowser: true,
-  disableLog: true,
-  displayDuration: true,
-  durationInMS: true,
-  customData: {
-    title: 'Run info',
-    data: [
-      { label: 'Project', value: `${projectName}` },
-      { label: 'Release', value: `${projectVersion}` },
-      { label: 'Report Generation Time', value: `${reportGenerationTime}` },
-    ],
-  },
-});
-```
+  ```javascript
+  const report = require('multiple-cucumber-html-reporter');
+  const path = require('path');
+  const projectName = path.basename(__dirname);
+  const projectVersion = process.env.npm_package_version;
+  const reportGenerationTime = new Date().toISOString();
+  report.generate({
+    reportName: 'TestCafe Report',
+    jsonDir: 'cucumber-json-reports',
+    reportPath: 'cucumber-json-reports/html',
+    openReportInBrowser: true,
+    disableLog: true,
+    displayDuration: true,
+    durationInMS: true,
+    customData: {
+      title: 'Run info',
+      data: [
+        { label: 'Project', value: `${projectName}` },
+        { label: 'Release', value: `${projectVersion}` },
+        { label: 'Report Generation Time', value: `${reportGenerationTime}` },
+      ],
+    },
+  });
+  ```
 
 - insert the following script in the `package.json` file:
 
-```javascript
-"report": "node report-generator.js",
-```
+  ```javascript
+  "report": "node report-generator.js",
+  ```
 
 - run the command `npm run report`
 
