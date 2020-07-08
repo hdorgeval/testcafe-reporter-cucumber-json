@@ -53,8 +53,8 @@ export const extendedReporterPlugin: ExtendedReporterPlugin = {
     if (report) {
       report.finalizeWith(endTime, passed, warnings);
       report.writeFile();
-      return;
     }
+    this.write('');
   },
   chalk: chalk.default,
   formatError: (err: CallsiteError, prefix: string) => {
