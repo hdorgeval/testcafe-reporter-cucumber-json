@@ -39,6 +39,7 @@
     ],
     "editor.codeActionsOnSave": {
       "source.fixAll.eslint": true
-    }
+    },
+    "jest.autoEnable": true
   }
   
