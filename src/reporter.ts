@@ -7,7 +7,7 @@ import {
 } from './reporter-helpers';
 import { CallsiteError, ExtendedReporterPlugin, TestRunInfo } from './reporter-interface';
 import { filterStackFramesIn, getAllFilesIn, stackFramesOf } from './stack-frames-parser';
-import { getStackTraceHeaderFrom } from './stack-trace-parser';
+import { removeCommonFirstLines } from './remove-common-first-lines';
 import * as chalk from 'chalk';
 
 export const extendedReporterPlugin: ExtendedReporterPlugin = {
@@ -29,20 +29,28 @@ export const extendedReporterPlugin: ExtendedReporterPlugin = {
     testRunInfo: TestRunInfo,
     report: CucumberJsonReportInterface,
   ) {
-    let formattedErrorMessage: string | undefined;
-    if (Array.isArray(testRunInfo.errs) && testRunInfo.errs.length > 0) {
-      formattedErrorMessage = this.renderErrors(testRunInfo.errs);
+    report.createScenario(name, testRunInfo);
+
+    if (Array.isArray(testRunInfo.errs) && testRunInfo.errs.length === 0) {
+      return;
     }
 
-    const screenshots: string[] = [];
-    if (Array.isArray(testRunInfo.screenshots) && testRunInfo.screenshots.length > 0) {
-      testRunInfo.screenshots.forEach((img) => screenshots.push(img.screenshotPath));
-    }
+    const browsers = new Set(testRunInfo.errs.map((err) => err.userAgent));
+    Array.from(browsers).forEach((browser) => {
+      const callsiteErrors = testRunInfo.errs.filter((err) => err.userAgent === browser);
+      if (callsiteErrors.length === 0) {
+        return;
+      }
+      const testRunId = callsiteErrors[0].testRunId;
+      const formattedErrorMessage = this.renderErrors(callsiteErrors);
+      const screenshots = testRunInfo.screenshots
+        .filter((s) => s.testRunId === testRunId)
+        .map((s) => s.screenshotPath);
 
-    report
-      .createScenario(name, testRunInfo)
-      .withError(formattedErrorMessage)
-      .withScreenshots(screenshots);
+      report
+        .withBrowserError(formattedErrorMessage, browser)
+        .withBrowserScreenshots(screenshots, browser);
+    });
   },
   reportTaskDone(
     endTime: Date,
@@ -52,7 +60,7 @@ export const extendedReporterPlugin: ExtendedReporterPlugin = {
   ) {
     if (report) {
       report.finalizeWith(endTime, passed, warnings);
-      report.writeFile();
+      report.writeJsonFiles();
     }
     this.write('');
   },
@@ -96,7 +104,6 @@ export const extendedReporterPlugin: ExtendedReporterPlugin = {
       filterStackFramesIn(err.callsite);
       const originalStackFrames = [...err.callsite.stackFrames];
       const files = getAllFilesIn(err.callsite);
-      let stackTraceHeader: string;
       files.map((filename: string, index: number) => {
         err.callsite.stackFrames = stackFramesOf(filename).in(originalStackFrames);
         err.callsite.filename = filename;
@@ -105,15 +112,11 @@ export const extendedReporterPlugin: ExtendedReporterPlugin = {
 
         if (index === 0) {
           lines.push(stackTrace);
-          stackTraceHeader = getStackTraceHeaderFrom(stackTrace);
           return;
         }
-        if (stackTraceHeader) {
-          const truncatedStackTrace = stackTrace.replace(stackTraceHeader, '');
-          lines.push(truncatedStackTrace);
-          return;
-        }
-        lines.push(stackTrace);
+
+        const additionalStackTrace = removeCommonFirstLines(lines[0], stackTrace);
+        lines.push(additionalStackTrace);
       });
     });
 

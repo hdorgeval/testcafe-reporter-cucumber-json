@@ -1,5 +1,9 @@
 import { TestRunInfo } from './reporter-interface';
 
+export interface MultiBrowserFeatureReport {
+  [userAgent: string]: FeatureReport;
+}
+
 export interface FeatureReport {
   description: string;
   elements: Scenario[];
@@ -40,6 +44,10 @@ export interface Scenario {
   tags: Tag[];
   type: string;
   uri: string;
+}
+
+export interface MultiBrowserScenario {
+  [userAgent: string]: Scenario;
 }
 
 export interface Step {
@@ -91,9 +99,8 @@ export interface CustomReportData {
 export interface CucumberJsonReportInterface {
   createFeature: (name: string, path: string) => CucumberJsonReportInterface;
   createScenario: (name: string, testRunInfo: TestRunInfo) => CucumberJsonReportInterface;
-  currentFeature: FeatureReport | undefined;
-  currentScenario: Scenario | undefined;
-  currentStep: Step | undefined;
+  currentFeature: MultiBrowserFeatureReport | undefined;
+  currentScenario: MultiBrowserScenario | undefined;
   finalizeWith: (
     endTime: Date,
     passed: number,
@@ -104,10 +111,16 @@ export interface CucumberJsonReportInterface {
     userAgents: string[],
     testCount: number,
   ) => CucumberJsonReportInterface;
-  toJson: () => string;
-  withError: (error: string | undefined) => CucumberJsonReportInterface;
-  withScreenshots: (path: string[] | undefined) => CucumberJsonReportInterface;
-  writeFile: () => void;
+  toJson: (userAgent: string) => string;
+  withBrowserError: (
+    error: string | undefined,
+    userAgent: string,
+  ) => CucumberJsonReportInterface;
+  withBrowserScreenshots: (
+    path: string[] | undefined,
+    userAgent: string,
+  ) => CucumberJsonReportInterface;
+  writeJsonFiles: () => void;
 }
 
 export interface Metadata {

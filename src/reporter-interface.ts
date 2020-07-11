@@ -56,12 +56,14 @@ export interface Screenshot {
   userAgent: string;
   quarantineAttempt: number | null;
   takenOnFail: boolean;
+  testRunId: string;
 }
 
 export interface CallsiteError {
   callsite: CallsiteInterface;
   isTestCafeError: boolean;
   screenshotPath: string;
+  testRunId: string;
   type: TestCafeErrorType;
   userAgent: string;
 }
