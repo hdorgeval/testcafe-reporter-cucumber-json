@@ -31,25 +31,32 @@ export const extendedReporterPlugin: ExtendedReporterPlugin = {
   ) {
     report.createScenario(name, testRunInfo);
 
-    if (Array.isArray(testRunInfo.errs) && testRunInfo.errs.length === 0) {
-      return;
-    }
+    const browsers = new Set(
+      testRunInfo.browsers.map((browser) => browser.prettyUserAgent),
+    );
 
-    const browsers = new Set(testRunInfo.errs.map((err) => err.userAgent));
     Array.from(browsers).forEach((browser) => {
-      const callsiteErrors = testRunInfo.errs.filter((err) => err.userAgent === browser);
-      if (callsiteErrors.length === 0) {
+      const browserInfo = testRunInfo.browsers.find(
+        (browserInfo) => browserInfo.prettyUserAgent === browser,
+      );
+      if (!browserInfo) {
         return;
       }
-      const testRunId = callsiteErrors[0].testRunId;
-      const formattedErrorMessage = this.renderErrors(callsiteErrors);
+      const testRunId = browserInfo.testRunId;
       const screenshots = testRunInfo.screenshots
         .filter((s) => s.testRunId === testRunId)
         .map((s) => s.screenshotPath);
+      report.withBrowserScreenshots(screenshots, browser);
 
-      report
-        .withBrowserError(formattedErrorMessage, browser)
-        .withBrowserScreenshots(screenshots, browser);
+      const callsiteErrors = (testRunInfo.errs || []).filter(
+        (err) => err.userAgent === browser,
+      );
+      if (Array.isArray(callsiteErrors) && callsiteErrors.length === 0) {
+        return;
+      }
+
+      const formattedErrorMessage = this.renderErrors(callsiteErrors);
+      report.withBrowserError(formattedErrorMessage, browser);
     });
   },
   reportTaskDone(

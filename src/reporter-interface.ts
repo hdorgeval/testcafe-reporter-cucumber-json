@@ -43,11 +43,27 @@ export interface ExtendedReporterPlugin extends ExtendedReporter, ReporterlPlugi
 }
 
 export interface TestRunInfo {
+  browsers: BrowserInfo[];
   durationMs: number;
-  screenshotPath: string;
-  skipped: boolean;
   errs: CallsiteError[];
+  screenshotPath: string | null;
   screenshots: Screenshot[];
+  skipped: boolean;
+  videos: unknown[];
+  warnings: string[];
+}
+
+export interface BrowserInfo {
+  alias: string;
+  engine: unknown;
+  headless: boolean;
+  name: string;
+  os: unknown;
+  platform: string;
+  prettyUserAgent: string;
+  testRunId: string;
+  userAgent: string;
+  version: string;
 }
 
 export interface Screenshot {
@@ -61,9 +77,13 @@ export interface Screenshot {
 
 export interface CallsiteError {
   callsite: CallsiteInterface;
+  code: string;
+  errMsg: string;
   isTestCafeError: boolean;
+  originError: string;
   screenshotPath: string;
   testRunId: string;
+  testRunPhase: string;
   type: TestCafeErrorType;
   userAgent: string;
 }
@@ -80,6 +100,11 @@ export interface StackFrame {
   getFileName: () => string;
   getLineNumber: () => number;
   getColumnNumber: () => number;
+  fileName: string;
+  lineNumber: number;
+  columnNumber: number;
+  source: string;
+  functionName?: string;
 }
 export interface CallsiteRendererOption {
   codeFrame: boolean;
@@ -88,60 +113,60 @@ export interface CallsiteRendererOption {
 }
 
 export type TestCafeErrorType =
-  | 'actionElementNotFoundError'
-  | 'uncaughtErrorOnPage'
-  | 'uncaughtErrorInTestCode'
-  | 'uncaughtNonErrorObjectInTestCode'
-  | 'uncaughtErrorInClientFunctionCode'
-  | 'uncaughtErrorInCustomDOMPropertyCode'
-  | 'missingAwaitError'
-  | 'actionIntegerOptionError'
-  | 'actionPositiveIntegerOptionError'
-  | 'actionBooleanOptionError'
-  | 'actionSpeedOptionError'
-  | 'actionOptionsTypeError'
-  | 'actionStringArgumentError'
-  | 'actionNullableStringArgumentError'
-  | 'actionStringOrStringArrayArgumentError'
-  | 'actionStringArrayElementError'
-  | 'actionIntegerArgumentError'
-  | 'actionRoleArgumentError'
-  | 'actionPositiveIntegerArgumentError'
-  | 'actionSelectorError'
-  | 'actionElementNotFoundError'
-  | 'actionElementIsInvisibleError'
-  | 'actionSelectorMatchesWrongNodeTypeError'
-  | 'actionAdditionalElementNotFoundError'
   | 'actionAdditionalElementIsInvisibleError'
+  | 'actionAdditionalElementNotFoundError'
   | 'actionAdditionalSelectorMatchesWrongNodeTypeError'
-  | 'actionElementNonEditableError'
-  | 'actionElementNotTextAreaError'
-  | 'actionElementNonContentEditableError'
-  | 'actionElementIsNotFileInputError'
-  | 'actionRootContainerNotFoundError'
-  | 'actionIncorrectKeysError'
+  | 'actionBooleanOptionError'
   | 'actionCanNotFindFileToUploadError'
-  | 'actionUnsupportedDeviceTypeError'
-  | 'actionIframeIsNotLoadedError'
+  | 'actionElementIsInvisibleError'
+  | 'actionElementIsNotFileInputError'
+  | 'actionElementNonContentEditableError'
+  | 'actionElementNonEditableError'
+  | 'actionElementNotFoundError'
+  | 'actionElementNotFoundError'
   | 'actionElementNotIframeError'
+  | 'actionElementNotTextAreaError'
+  | 'actionIframeIsNotLoadedError'
+  | 'actionIncorrectKeysError'
+  | 'actionIntegerArgumentError'
+  | 'actionIntegerOptionError'
   | 'actionInvalidScrollTargetError'
+  | 'actionNullableStringArgumentError'
+  | 'actionOptionsTypeError'
+  | 'actionPositiveIntegerArgumentError'
+  | 'actionPositiveIntegerOptionError'
+  | 'actionRoleArgumentError'
+  | 'actionRootContainerNotFoundError'
+  | 'actionSelectorError'
+  | 'actionSelectorMatchesWrongNodeTypeError'
+  | 'actionSpeedOptionError'
+  | 'actionStringArgumentError'
+  | 'actionStringArrayElementError'
+  | 'actionStringOrStringArrayArgumentError'
+  | 'actionUnsupportedDeviceTypeError'
+  | 'assertionExecutableArgumentError'
+  | 'cantObtainInfoForElementSpecifiedBySelectorError'
+  | 'clientFunctionExecutionInterruptionError'
+  | 'currentIframeIsInvisibleError'
   | 'currentIframeIsNotLoadedError'
   | 'currentIframeNotFoundError'
-  | 'currentIframeIsInvisibleError'
-  | 'nativeDialogNotHandledError'
-  | 'uncaughtErrorInNativeDialogHandler'
-  | 'setTestSpeedArgumentError'
-  | 'setNativeDialogHandlerCodeWrongTypeError'
-  | 'clientFunctionExecutionInterruptionError'
   | 'domNodeClientFunctionResultError'
-  | 'invalidSelectorResultError'
-  | 'cantObtainInfoForElementSpecifiedBySelectorError'
   | 'externalAssertionLibraryError'
-  | 'pageLoadError'
-  | 'windowDimensionsOverflowError'
   | 'invalidElementScreenshotDimensionsError'
+  | 'invalidSelectorResultError'
+  | 'missingAwaitError'
+  | 'nativeDialogNotHandledError'
+  | 'pageLoadError'
   | 'roleSwitchInRoleInitializerError'
-  | 'assertionExecutableArgumentError';
+  | 'setNativeDialogHandlerCodeWrongTypeError'
+  | 'setTestSpeedArgumentError'
+  | 'uncaughtErrorInClientFunctionCode'
+  | 'uncaughtErrorInCustomDOMPropertyCode'
+  | 'uncaughtErrorInNativeDialogHandler'
+  | 'uncaughtErrorInTestCode'
+  | 'uncaughtErrorOnPage'
+  | 'uncaughtNonErrorObjectInTestCode'
+  | 'windowDimensionsOverflowError';
 
 export interface ReporterlPluginHost {
   write: (text: string) => ReporterlPluginHost;
