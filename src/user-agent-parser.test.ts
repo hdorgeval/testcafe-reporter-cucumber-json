@@ -24,7 +24,7 @@ test('It should get Windows platform on Browserstack', () => {
   expect(result.version).toBe('10.0.0');
 });
 
-test('It should get iOS platform on Browserstack', () => {
+test('It should get iOS 10.3.1 platform on Browserstack', () => {
   // Given
   const userAgent =
     'Safari 10.0 / iOS 10.3.1 (https://automate.browserstack.com/builds/7f1806192a8a516a750bfc912d5cbfb29bdb5417/sessions/15c6840f3a3f34b18779c40b65074bf5476ccbf5)';
@@ -35,6 +35,19 @@ test('It should get iOS platform on Browserstack', () => {
   // Then
   expect(result.name).toBe('ios');
   expect(result.version).toBe('10.3.1');
+});
+
+test('It should get iOS 13.3 platform on Browserstack', () => {
+  // Given
+  const userAgent =
+    'Safari 13.0.4 / iOS 13.3 (https://automate.browserstack.com/builds/7f1806192a8a516a750bfc912d5cbfb29bdb5417/sessions/747fdbcc4b4287207805c3ea7a35027c4461e213)';
+
+  // When
+  const result = getPlatformFrom(userAgent);
+
+  // Then
+  expect(result.name).toBe('ios');
+  expect(result.version).toBe('13.3');
 });
 
 test('It should get OSX platform', () => {
