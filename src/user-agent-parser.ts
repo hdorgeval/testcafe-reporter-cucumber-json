@@ -45,6 +45,12 @@ export function getPlatformFrom(userAgent: string | undefined): Platform {
     };
   }
   const platformInfo = extractNameAndVersion(rawPlatorm);
+  if (isIOS(platformInfo.name)) {
+    return {
+      name: 'ios',
+      version: platformInfo.version,
+    };
+  }
   if (isMacOsX(platformInfo.name)) {
     return {
       name: 'osx',
@@ -92,6 +98,14 @@ export function getDeviceFrom(userAgent: string | undefined): string {
   }
   const platformInfo = extractNameAndVersion(rawPlatorm);
   return platformInfo.name;
+}
+
+export function isIOS(platformName: string | undefined): boolean {
+  if (platformName === undefined) {
+    return false;
+  }
+  const result = platformName.toLowerCase().includes('ios');
+  return result;
 }
 
 export function isMacOsX(platformName: string | undefined): boolean {
