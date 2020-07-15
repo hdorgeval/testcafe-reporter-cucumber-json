@@ -204,15 +204,40 @@ export class CucumberJsonReport implements CucumberJsonReportInterface {
     this.currentScenario = newScenario;
     return this;
   };
+
+  private getUserAgentFromBrowser(browser: string): string {
+    const userAgent = this._userAgents.find((ua) => {
+      if (ua.includes('https://')) {
+        return ua.startsWith(`${browser} `);
+      }
+      return ua === browser;
+    });
+
+    if (userAgent === undefined) {
+      // eslint-disable-next-line no-console
+      console.warn(
+        `Cannot match browser '${browser}' with '${this._userAgents.join(';')}'`,
+      );
+      return browser;
+    }
+
+    return userAgent;
+  }
+
   public withBrowserError = (
     error: string | undefined,
-    userAgent: string,
+    browser: string,
   ): CucumberJsonReportInterface => {
     if (!error) {
       return this;
     }
 
-    const steps = this.currentScenario && this.currentScenario[userAgent].steps;
+    const userAgent = this.getUserAgentFromBrowser(browser);
+    const steps =
+      this.currentScenario &&
+      this.currentScenario[userAgent] &&
+      this.currentScenario[userAgent].steps;
+
     if (!Array.isArray(steps)) {
       return this;
     }
@@ -226,9 +251,10 @@ export class CucumberJsonReport implements CucumberJsonReportInterface {
 
     return this;
   };
+
   public withBrowserScreenshots = (
     paths: string[] | undefined,
-    userAgent: string,
+    browser: string,
   ): CucumberJsonReportInterface => {
     if (!Array.isArray(paths)) {
       return this;
@@ -237,7 +263,13 @@ export class CucumberJsonReport implements CucumberJsonReportInterface {
     if (paths.length === 0) {
       return this;
     }
-    const steps = this.currentScenario && this.currentScenario[userAgent].steps;
+
+    const userAgent = this.getUserAgentFromBrowser(browser);
+    const steps =
+      this.currentScenario &&
+      this.currentScenario[userAgent] &&
+      this.currentScenario[userAgent].steps;
+
     if (!Array.isArray(steps)) {
       return this;
     }
