@@ -69,6 +69,13 @@ export function getPlatformFrom(userAgent: string | undefined): Platform {
       version: platformInfo.version,
     };
   }
+
+  if (isAndroid(platformInfo.name)) {
+    return {
+      name: 'android',
+      version: platformInfo.version,
+    };
+  }
   // eslint-disable-next-line no-console
   console.warn(
     `testcafe-reporter-cucumber-json: cannot get the Platform name from input string '${userAgent}'`,
@@ -131,6 +138,14 @@ export function isWindows(platformName: string | undefined): boolean {
     return false;
   }
   const result = platformName.toLowerCase().includes('windows');
+  return result;
+}
+
+export function isAndroid(platformName: string | undefined): boolean {
+  if (platformName === undefined) {
+    return false;
+  }
+  const result = platformName.toLowerCase().includes('android');
   return result;
 }
 

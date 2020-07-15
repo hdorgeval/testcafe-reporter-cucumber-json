@@ -109,3 +109,15 @@ test('It should get browser from Microsoft Edge 83.0.478.58 / macOS 10.15.5', ()
   expect(result.name).toBe('edge');
   expect(result.version).toBe('83.0.478.58');
 });
+
+test('It should get Android 10 platform', () => {
+  // Given
+  const userAgent = 'Chrome 83.0.4103.106 / Android 10';
+
+  // When
+  const result = getPlatformFrom(userAgent);
+
+  // Then
+  expect(result.name).toBe('android');
+  expect(result.version).toBe('10');
+});
