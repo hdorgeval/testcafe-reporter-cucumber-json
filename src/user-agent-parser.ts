@@ -95,7 +95,8 @@ export function getDeviceFrom(userAgent: string | undefined): string {
   if (userAgent === undefined) {
     return 'undefined';
   }
-  const parts = userAgent.split('/');
+  const sanitizedUserAgent = userAgent.replace(/\(https:.*\)/gi, '');
+  const parts = sanitizedUserAgent.split('/');
   if (parts.length <= 1) {
     return 'undefined';
   }

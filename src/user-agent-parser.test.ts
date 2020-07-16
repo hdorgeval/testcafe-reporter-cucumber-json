@@ -1,4 +1,4 @@
-import { getPlatformFrom, getBrowserFrom } from './user-agent-parser';
+import { getPlatformFrom, getBrowserFrom, getDeviceFrom } from './user-agent-parser';
 
 test('It should get Windows platform', () => {
   // Given
@@ -120,4 +120,27 @@ test('It should get Android 10 platform', () => {
   // Then
   expect(result.name).toBe('android');
   expect(result.version).toBe('10');
+});
+
+test('It should get macOS device on browserstack', () => {
+  // Given
+  const userAgent =
+    'Firefox 58.0 / macOS 10.13 (https://automate.browserstack.com/builds/0a16cdee255e6b5d2a62b8de836aa502cbed08c7/sessions/33495d985b83a6ad3ce2da6d6a67830ee8f078ad)';
+
+  // When
+  const result = getDeviceFrom(userAgent);
+
+  // Then
+  expect(result).toBe('macOS');
+});
+
+test('It should get macOS device', () => {
+  // Given
+  const userAgent = 'Firefox 58.0 / macOS 10.13';
+
+  // When
+  const result = getDeviceFrom(userAgent);
+
+  // Then
+  expect(result).toBe('macOS');
 });
