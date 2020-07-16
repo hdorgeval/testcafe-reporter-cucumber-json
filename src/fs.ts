@@ -132,7 +132,9 @@ export const toBase64DataImageUrl = (path: string): string => {
 };
 
 export const userAgentToFilename = (userAgent: string): string => {
-  const filename = userAgent
+  const sanitizedUserAgent = userAgent.replace(/\(https:.*\)/gi, '');
+  const filename = sanitizedUserAgent
+    .trim()
     .replace(/[\s./:\\]/g, '_')
     .replace(/___/g, '_')
     .replace(/__/g, '_')
