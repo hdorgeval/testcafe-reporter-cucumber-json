@@ -146,7 +146,7 @@ export interface Browser {
 }
 
 export type BrowserName =
-  | 'internet explorer'
+  | 'Internet Explorer'
   | 'edge'
   | 'chrome'
   | 'firefox'

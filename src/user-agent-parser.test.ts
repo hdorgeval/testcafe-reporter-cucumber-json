@@ -144,3 +144,16 @@ test('It should get macOS device', () => {
   // Then
   expect(result).toBe('macOS');
 });
+
+test('It should get IE browser on browserstack', () => {
+  // Given
+  const userAgent =
+    'Internet Explorer 11.0 / Windows 10 (https://automate.browserstack.com/builds/0a16cdee255e6b5d2a62b8de836aa502cbed08c7/sessions/f2ad118f39459fb8d80a906e1ba945626d20dad0)';
+
+  // When
+  const result = getBrowserFrom(userAgent);
+
+  // Then
+  expect(result.name).toBe('Internet Explorer');
+  expect(result.version).toBe('11.0');
+});

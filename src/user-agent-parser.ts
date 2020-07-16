@@ -232,12 +232,13 @@ export function getBrowserFrom(userAgent: string | undefined): Browser {
 }
 
 export const browserNameMapping: { [index: string]: BrowserName } = {
+  'Internet Explorer': 'Internet Explorer',
   'Microsoft Edge': 'edge',
   Chrome: 'chrome',
   Edge: 'edge',
   Firefox: 'firefox',
   HeadlessChrome: 'chrome',
-  IE: 'internet explorer',
+  IE: 'Internet Explorer',
   Opera: 'opera',
   Safari: 'safari',
 };
