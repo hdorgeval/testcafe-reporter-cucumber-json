@@ -17,9 +17,10 @@ import {
   userAgentToFilename,
   dateToFilename,
 } from './fs';
-import { TestRunInfo, CallsiteError } from './reporter-interface';
+import { TestRunInfo, CallsiteError, BrowserInfo } from './reporter-interface';
 import { distinct, tagsFromDescription } from './tags-parser';
 import { getBrowserFrom, getDeviceFrom, getPlatformFrom } from './user-agent-parser';
+import { getDeviceFromBrowserInfo } from './device-parser';
 export class CucumberJsonReport implements CucumberJsonReportInterface {
   private _startTime: Date = new Date();
   private _endTime: Date = new Date();
@@ -230,6 +231,25 @@ export class CucumberJsonReport implements CucumberJsonReportInterface {
 
     return userAgent;
   }
+
+  public withBrowserInfo = (
+    browser: string,
+    browserInfo: BrowserInfo,
+  ): CucumberJsonReportInterface => {
+    const userAgent = this.getUserAgentFromBrowser(browser);
+    const metadata =
+      this.currentFeature &&
+      this.currentFeature[userAgent] &&
+      (this.currentFeature[userAgent].metadata as Metadata);
+
+    const device = getDeviceFromBrowserInfo(browserInfo);
+
+    if (metadata && device) {
+      metadata.device = device;
+    }
+
+    return this;
+  };
 
   public withBrowserError = (
     error: string | undefined,

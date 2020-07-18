@@ -42,6 +42,9 @@ export const extendedReporterPlugin: ExtendedReporterPlugin = {
       if (!browserInfo) {
         return;
       }
+
+      report.withBrowserInfo(browser, browserInfo);
+
       const testRunId = browserInfo.testRunId;
       const screenshots = testRunInfo.screenshots
         .filter((s) => s.testRunId === testRunId)

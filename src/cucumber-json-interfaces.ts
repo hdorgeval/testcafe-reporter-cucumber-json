@@ -1,4 +1,4 @@
-import { TestRunInfo } from './reporter-interface';
+import { TestRunInfo, BrowserInfo } from './reporter-interface';
 
 export interface MultiBrowserFeatureReport {
   [userAgent: string]: FeatureReport;
@@ -119,6 +119,11 @@ export interface CucumberJsonReportInterface {
   withBrowserScreenshots: (
     path: string[] | undefined,
     userAgent: string,
+  ) => CucumberJsonReportInterface;
+
+  withBrowserInfo: (
+    userAgent: string,
+    browserInfo: BrowserInfo,
   ) => CucumberJsonReportInterface;
   writeJsonFiles: () => void;
 }
