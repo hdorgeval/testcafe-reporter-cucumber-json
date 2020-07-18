@@ -1,8 +1,6 @@
-# Cucumber JSON TestCafe Reporter
+# Cucumber JSON TestCafe Reporter [![npm version](https://img.shields.io/npm/v/testcafe-reporter-cucumber-json.svg)](https://www.npmjs.com/package/testcafe-reporter-cucumber-json)
 
 This is the **Cucumber JSON** reporter plugin for [TestCafe](http://devexpress.github.io/testcafe).
-
-[![npm badge](https://nodei.co/npm/testcafe-reporter-cucumber-json.png)](https://npmjs.org/package/testcafe-reporter-cucumber-json)
 
 This TestCafe reporter generates JSON files that can be merged and converted to a nice and searchable html report by using [multiple-cucumber-html-reporter](https://github.com/wswebcreation/multiple-cucumber-html-reporter).
 
