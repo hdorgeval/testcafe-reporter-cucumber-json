@@ -128,6 +128,7 @@ export interface Metadata {
   browser: Browser;
   device: string;
   platform: Platform;
+  reportTime: Date;
   startTime: Date;
 }
 export interface Platform {

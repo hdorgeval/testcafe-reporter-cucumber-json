@@ -2,13 +2,14 @@ import { cliArgs } from './command-line-args';
 import {
   CucumberJsonReportInterface,
   FeatureReport,
+  Metadata,
+  MultiBrowserFeatureReport,
+  MultiBrowserScenario,
   NameVersion,
   Scenario,
   Step,
   StepStatus,
   testcafeDefaultStep,
-  MultiBrowserFeatureReport,
-  MultiBrowserScenario,
 } from './cucumber-json-interfaces';
 import {
   toBase64DataImageUrl,
@@ -101,6 +102,11 @@ export class CucumberJsonReport implements CucumberJsonReportInterface {
   };
   public toJson = (userAgent: string): string => {
     try {
+      this._features.forEach((feature) => {
+        if (feature[userAgent]) {
+          (feature[userAgent].metadata as Metadata).reportTime = new Date();
+        }
+      });
       const features = this._features.map((f) => f[userAgent]);
       const json = JSON.stringify(features, null, 2);
       return json;
@@ -146,6 +152,7 @@ export class CucumberJsonReport implements CucumberJsonReportInterface {
           browser: getBrowserFrom(userAgent),
           device: getDeviceFrom(userAgent),
           platform: getPlatformFrom(userAgent),
+          reportTime: this._startTime,
           startTime: this._startTime,
         },
         name: name
