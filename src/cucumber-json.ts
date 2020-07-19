@@ -1,11 +1,11 @@
 import { cliArgs } from './command-line-args';
 import {
+  AppNameVersion,
   CucumberJsonReportInterface,
   FeatureReport,
   Metadata,
   MultiBrowserFeatureReport,
   MultiBrowserScenario,
-  NameVersion,
   Scenario,
   Step,
   StepStatus,
@@ -31,7 +31,7 @@ export class CucumberJsonReport implements CucumberJsonReportInterface {
   private _features: MultiBrowserFeatureReport[] = [];
   private _currentFeature: MultiBrowserFeatureReport | undefined;
   private _currentScenario: MultiBrowserScenario | undefined;
-  private _currentApp!: NameVersion;
+  private _currentApp: AppNameVersion | undefined = undefined;
 
   private _storageFolder: string = cliArgs.reportFolder || 'cucumber-json-reports';
 
@@ -72,10 +72,18 @@ export class CucumberJsonReport implements CucumberJsonReportInterface {
     this._features = [];
     this._currentFeature = undefined;
     this._currentScenario = undefined;
-    this._currentApp = {
-      name: cliArgs.appName,
-      version: cliArgs.appVersion,
-    };
+    this._currentApp = undefined;
+
+    if (cliArgs.appName) {
+      this._currentApp = {
+        name: cliArgs.appName,
+      };
+    }
+
+    if (this._currentApp && cliArgs.appName && cliArgs.appVersion) {
+      this._currentApp.version = cliArgs.appVersion;
+    }
+
     return this;
   };
 

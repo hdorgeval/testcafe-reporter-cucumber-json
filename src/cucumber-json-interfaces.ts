@@ -129,7 +129,7 @@ export interface CucumberJsonReportInterface {
 }
 
 export interface Metadata {
-  app: NameVersion;
+  app: AppNameVersion | undefined;
   browser: Browser;
   device: string;
   platform: Platform;
@@ -144,6 +144,11 @@ export interface Platform {
 export interface NameVersion {
   name: string;
   version: string;
+}
+
+export interface AppNameVersion {
+  name: string;
+  version?: string;
 }
 
 export interface Browser {
