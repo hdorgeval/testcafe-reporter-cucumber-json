@@ -13,7 +13,7 @@ export function getDeviceFromBrowserInfo(browserInfo: BrowserInfo): string | nul
       return browserstatckDevice;
     }
 
-    if (aliasParts.length >= 3 && browserstatckDevice) {
+    if (aliasParts.length >= 2 && browserstatckDevice) {
       return browserstatckDevice;
     }
   }
