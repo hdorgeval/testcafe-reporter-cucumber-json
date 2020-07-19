@@ -185,9 +185,3 @@ The HTML report will merge all the JSON files inside folder `cucumber-json-repor
 ## Screenshot rendering
 
 - this reporter embeds all screenshots as base 64 images, making the generated json file completely autonomous.
-
-## Contributors
-
-- [Tareq El-Masri](https://github.com/TareqElMasri)
-- [Tom Ardern](https://github.com/tomardern)
-- [Henri d'Orgeval](https://github.com/hdorgeval)
