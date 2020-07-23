@@ -5,6 +5,19 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
+## [6.1.0] - 2020-07-23
+
+### Added
+
+- feat(reporter): be able to display the date and time of tests execution in the final HTML report.
+  ![report-overview](media/report04.png)
+
+  To enable this feature you must add `displayReportTime: true` to the `options` object passed to the HTML generator.
+
+### Fixed
+
+- update dependencies
+
 ## [6.0.10] - 2020-07-19
 
 ### Fixed
