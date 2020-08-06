@@ -52,7 +52,7 @@ export const extendedReporterPlugin: ExtendedReporterPlugin = {
       report.withBrowserScreenshots(screenshots, browser);
 
       const callsiteErrors = (testRunInfo.errs || []).filter(
-        (err) => err.userAgent === browser,
+        (err) => err.testRunId === testRunId,
       );
       if (Array.isArray(callsiteErrors) && callsiteErrors.length === 0) {
         return;
