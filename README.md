@@ -33,6 +33,14 @@ If you need to change this folder, add this option on the TestCafé command-line
 --reporter-json-folder='my-custom-folder'
 ```
 
+or add/edit the `args` section inside the `testcafe-reporter-cucumber-json.json` configuration file:
+
+```json
+  "args": {
+    "reportFolder": "my-custom-folder"
+  }
+```
+
 At each TestCafé run, this reporter will create a separate JSON file for each browser started by TestCafé.
 
 Each JSON file will be named : `[browser name][browser platform][date and time of execution].json`.
@@ -55,10 +63,26 @@ If you would like to show in the report the App name targeted by your tests, add
 --reporter-app-name='My App'
 ```
 
+or add/edit the `args` section inside the `testcafe-reporter-cucumber-json.json` configuration file:
+
+```json
+  "args": {
+    "appName": "My App",
+  }
+```
+
 And if you need to also show the App version, add this option on the TestCafé command-line:
 
 ```sh
 --reporter-app-version='x.y.z'
+```
+
+or add/edit the `args` section inside the `testcafe-reporter-cucumber-json.json` configuration file:
+
+```json
+  "args": {
+    "appVersion": "x.y.z",
+  }
 ```
 
 ## To generate the HTML report
