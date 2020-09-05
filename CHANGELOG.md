@@ -5,6 +5,32 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
+## [6.2.0] - 2020-09-05
+
+### Added
+
+- feat(reporter): be able to set cli options through configuration file
+
+  - you can now use the `testcafe-reporter-cucumber-json.json` configuration file to set the `--reporter-json-folder`, `--reporter-app-name` and `--reporter-app-version` cli options: add or edit the `args` section in the json configuration file:
+
+  ```json
+  "args": {
+    "appName": false,
+    "appVersion": false,
+    "reportFolder": "my-custom-folder"
+  }
+  ```
+
+  Every property in `args` is optional. If you just want to only setup a custom folder:
+
+  ```json
+  "args": {
+    "reportFolder": "my-custom-folder"
+  }
+  ```
+
+  Note: The command-line options will take precedence over the configuration file.
+
 ## [6.1.1] - 2020-08-06
 
 ### Fixed
