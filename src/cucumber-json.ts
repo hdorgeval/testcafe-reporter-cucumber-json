@@ -314,7 +314,7 @@ export class CucumberJsonReport implements CucumberJsonReportInterface {
     }
 
     const currentStep = steps[steps.length - 1];
-    currentStep.image = paths.map(toBase64DataImageUrl);
+    currentStep.image = paths.map(toBase64DataImageUrl).filter(isDefined);
 
     return this;
   };
@@ -381,4 +381,8 @@ export class CucumberJsonReport implements CucumberJsonReportInterface {
     // TODO: ensure this generated id is unique: if not prefix with filename
     return result;
   };
+}
+
+function isDefined<TValue>(value: TValue | undefined): value is TValue {
+  return value !== undefined;
 }
