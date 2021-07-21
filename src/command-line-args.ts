@@ -5,11 +5,18 @@ const optionsFromConfigurationFile = options;
 
 export const cliArgs = {
   ...args,
-  appName: args['reporter-app-name'] || optionsFromConfigurationFile.args?.appName,
+  appName:
+    process?.env['--reporter-app-name'] ||
+    args['reporter-app-name'] ||
+    optionsFromConfigurationFile.args?.appName,
   appVersion:
-    args['reporter-app-version'] || optionsFromConfigurationFile.args?.appVersion,
+    process?.env['--reporter-app-version'] ||
+    args['reporter-app-version'] ||
+    optionsFromConfigurationFile.args?.appVersion,
   reportFolder:
-    args['reporter-json-folder'] || optionsFromConfigurationFile.args?.reportFolder,
+    process?.env['--reporter-json-folder'] ||
+    args['reporter-json-folder'] ||
+    optionsFromConfigurationFile.args?.reportFolder,
   rawCommandLine: process.argv.join(' '),
 } as CliArgs;
 
