@@ -41,6 +41,12 @@ or add/edit the `args` section inside the `testcafe-reporter-cucumber-json.json`
   }
 ```
 
+or set the environment variable `--reporter-json-folder` (in this case this variable will take precedence over the command-line option and the configuration file):
+
+```js
+process.env['--reporter-json-folder'] = 'my-custom-folder';
+```
+
 At each TestCafé run, this reporter will create a separate JSON file for each browser started by TestCafé.
 
 Each JSON file will be named : `[browser name][browser platform][date and time of execution].json`.
@@ -71,6 +77,12 @@ or add/edit the `args` section inside the `testcafe-reporter-cucumber-json.json`
   }
 ```
 
+or set the environment variable `--reporter-app-name` (in this case this variable will take precedence over the command-line option and the configuration file):
+
+```js
+process.env['--reporter-app-name'] = 'My App';
+```
+
 And if you need to also show the App version, add this option on the TestCafé command-line:
 
 ```sh
@@ -83,6 +95,12 @@ or add/edit the `args` section inside the `testcafe-reporter-cucumber-json.json`
   "args": {
     "appVersion": "x.y.z",
   }
+```
+
+or set the environment variable `--reporter-app-version` (in this case this variable will take precedence over the command-line option and the configuration file):
+
+```js
+process.env['--reporter-app-version'] = 'x.y.z';
 ```
 
 ## To generate the HTML report
