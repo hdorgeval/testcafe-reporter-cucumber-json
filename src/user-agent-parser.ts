@@ -63,6 +63,12 @@ export function getPlatformFrom(userAgent: string | undefined): Platform {
       version: platformInfo.version,
     };
   }
+  if (isUbuntu(platformInfo.name)) {
+    return {
+      name: 'ubuntu',
+      version: platformInfo.version,
+    };
+  }
   if (isWindows(platformInfo.name)) {
     return {
       name: 'windows',
@@ -131,6 +137,14 @@ export function isLinux(platformName: string | undefined): boolean {
     return false;
   }
   const result = platformName.toLowerCase().includes('linux');
+  return result;
+}
+
+export function isUbuntu(platformName: string | undefined): boolean {
+  if (platformName === undefined) {
+    return false;
+  }
+  const result = platformName.toLowerCase().includes('ubuntu');
   return result;
 }
 
